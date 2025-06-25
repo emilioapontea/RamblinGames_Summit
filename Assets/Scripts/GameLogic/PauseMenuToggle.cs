@@ -1,0 +1,43 @@
+using UnityEngine;
+
+[RequireComponent(typeof(CanvasGroup))]
+public class PauseMenuToggle : MonoBehaviour
+{
+    private CanvasGroup canvasGroup;
+
+    void Awake()
+    {
+        canvasGroup = GetComponent<CanvasGroup>();
+        if (!canvasGroup)
+        {
+            Debug.LogError("Could not find CanvasGroup in UI Canvas.");
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            if (canvasGroup.interactable)
+            {
+                // Disable and hide the canvas if it is currently enabled
+                canvasGroup.interactable = false;
+                canvasGroup.blocksRaycasts = false;
+                canvasGroup.alpha = 0f;
+
+                // Unpause the game upon disabling the canvas
+                Time.timeScale = 1f;
+            }
+            else
+            {
+                // Enable and show the canvas if it is currently disabled
+                canvasGroup.interactable = true;
+                canvasGroup.blocksRaycasts = true;
+                canvasGroup.alpha = 1f;
+
+                // Pause the game upon enabling the canvas
+                Time.timeScale = 0f;
+            }
+        }
+    }
+}
