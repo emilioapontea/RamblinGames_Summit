@@ -24,15 +24,26 @@ public class PlayerController : MonoBehaviour
     /// The rate (in degrees) at which the player will turn on every fixed update.
     /// </summary>
     public float turningSpeed = 2.0f;
+    [Header("References")]
+    public LoseHandler loseScript;
     [Header("Debug")]
     /// <summary>
     /// Show the physics raycast used to test if player is grounded?
     /// Gizmos must also be set to visible for raycast to be seen.
     /// </summary>
-    [SerializeField] private bool showRaycast = false;
+    [SerializeField] private bool showGroundedRaycast = false;
+    /// <summary>
+    /// Draw a raycast in the direction the player is facing?
+    /// Gizmos must also be set to visible for raycast to be seen.
+    /// </summary>
+    [SerializeField] private bool showDirectionRaycast = false;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        if (loseScript == null)
+        {
+            Debug.LogError("Player object could not find a lose game script.");
+        }
     }
 
     void FixedUpdate()
@@ -50,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (showRaycast)
+        if (showGroundedRaycast)
         {
             if (IsGrounded())
             {
@@ -62,6 +73,19 @@ public class PlayerController : MonoBehaviour
                 // Draw red raycast if player cannot jump
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 10, Color.red);
             }
+        }
+        if (showDirectionRaycast)
+        {
+            // Draw raycast in the direction player is facing
+            Debug.DrawRay(transform.position, transform.forward * 10, Color.red);
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Respawn"))
+        {
+            Death();
         }
     }
 
@@ -105,5 +129,11 @@ public class PlayerController : MonoBehaviour
         {
             transform.Rotate(0.0f, turningSpeed, 0.0f, Space.Self);
         }
+    }
+
+    void Death()
+    {
+        Destroy(gameObject);
+        loseScript.LoseGame();
     }
 }

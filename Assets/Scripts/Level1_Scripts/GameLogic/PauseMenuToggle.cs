@@ -8,9 +8,9 @@ public class PauseMenuToggle : MonoBehaviour
     void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
-        if (!canvasGroup)
+        if (canvasGroup == null)
         {
-            Debug.LogError("Could not find CanvasGroup in UI Canvas.");
+            Debug.LogError("Could not find CanvasGroup component in UI Canvas.");
         }
     }
 

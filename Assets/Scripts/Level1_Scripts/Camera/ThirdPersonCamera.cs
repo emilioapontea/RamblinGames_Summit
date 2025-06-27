@@ -16,6 +16,11 @@ public class ThirdPersonCamera : MonoBehaviour
     protected Quaternion quaternionDeriv;
 
     protected float angle;
+    void Start()
+    {
+        if (desiredPose == null) Debug.LogError("Player camera does not have a position set");
+        if (target == null) Debug.LogError("Player camera does not have a target set.");
+    }
 
     void LateUpdate()
     {

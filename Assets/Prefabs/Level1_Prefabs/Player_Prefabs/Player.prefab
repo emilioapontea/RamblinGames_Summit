@@ -105,10 +105,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30bb9cf5d2c2eef40b34effda56cfa73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5
+  movementSpeed: 6
   jumpPower: 2
   turningSpeed: 2
-  showRaycast: 0
+  loseScript: {fileID: 0}
+  showGroundedRaycast: 0
+  showDirectionRaycast: 0
 --- !u!1 &8777165856559176059
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,7 +125,7 @@ GameObject:
   - component: {fileID: 4490528956797248949}
   m_Layer: 0
   m_Name: CapsuleCollision
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

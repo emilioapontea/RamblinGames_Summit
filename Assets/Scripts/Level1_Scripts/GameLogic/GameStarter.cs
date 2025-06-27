@@ -7,7 +7,7 @@ public class GameStarter : MonoBehaviour
     /// <summary>
     /// The name of the scene to load upon starting game.
     /// </summary>
-    public string startingScene = "Intro";
+    public string startingScene = "Controls";
 
     public void StartGame()
     {
