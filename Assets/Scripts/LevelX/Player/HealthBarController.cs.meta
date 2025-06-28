@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b7ca3d259bebf44dca260469d45a5e68
+guid: 5c0f78e4acfe21a4594760304164796e
 timeCreated: 1528773206
 licenseType: Store
 MonoImporter:
@@ -10,3 +10,10 @@ MonoImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 120676
+  packageName: Simple Heart Health System
+  packageVersion: 1.0
+  assetPath: Assets/HealthHeartSystem/Scripts/HealthBarController.cs
+  uploadId: 286486

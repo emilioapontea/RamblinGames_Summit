@@ -23,11 +23,11 @@ public class PlayerStats : MonoBehaviour
     #endregion
 
     [SerializeField]
-    private float health;
+    private float health = 3;
     [SerializeField]
-    private float maxHealth;
+    private float maxHealth = 3;
     [SerializeField]
-    private float maxTotalHealth;
+    private float maxTotalHealth = 20;
 
     public float Health { get { return health; } }
     public float MaxHealth { get { return maxHealth; } }

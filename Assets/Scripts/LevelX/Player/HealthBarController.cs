@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿/*
+ *  Author: ariel oliveira [o.arielg@gmail.com]
+ */
+
+using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthBarController : MonoBehaviour
@@ -11,33 +15,17 @@ public class HealthBarController : MonoBehaviour
 
     private void Start()
     {
-        if (PlayerStats.Instance == null)
-        {
-            Debug.LogError("PlayerStats.Instance is null!");
-            return;
-        }
-
-        int maxHearts = Mathf.CeilToInt(PlayerStats.Instance.MaxTotalHealth);
-
-        heartContainers = new GameObject[maxHearts];
-        heartFills = new Image[maxHearts];
+        // Should I use lists? Maybe :)
+        heartContainers = new GameObject[(int)PlayerStats.Instance.MaxTotalHealth];
+        heartFills = new Image[(int)PlayerStats.Instance.MaxTotalHealth];
 
         PlayerStats.Instance.onHealthChangedCallback += UpdateHeartsHUD;
-
         InstantiateHeartContainers();
         UpdateHeartsHUD();
     }
 
     public void UpdateHeartsHUD()
     {
-        if (PlayerStats.Instance == null)
-        {
-            Debug.LogError("PlayerStats.Instance is null during UpdateHeartsHUD!");
-            return;
-        }
-
-        Debug.Log($"Updating hearts HUD. Health: {PlayerStats.Instance.Health}, Max: {PlayerStats.Instance.MaxHealth}");
-
         SetHeartContainers();
         SetFilledHearts();
     }
@@ -46,9 +34,14 @@ public class HealthBarController : MonoBehaviour
     {
         for (int i = 0; i < heartContainers.Length; i++)
         {
-            bool shouldBeActive = i < PlayerStats.Instance.MaxHealth;
-            heartContainers[i].SetActive(shouldBeActive);
-            Debug.Log($"Heart {i}: Active = {shouldBeActive}");
+            if (i < PlayerStats.Instance.MaxHealth)
+            {
+                heartContainers[i].SetActive(true);
+            }
+            else
+            {
+                heartContainers[i].SetActive(false);
+            }
         }
     }
 
@@ -58,55 +51,38 @@ public class HealthBarController : MonoBehaviour
         {
             if (i < PlayerStats.Instance.Health)
             {
-                heartFills[i].fillAmount = 1f;
-                Debug.Log($"Heart {i}: Full");
+                heartFills[i].fillAmount = 1;
             }
             else
             {
-                heartFills[i].fillAmount = 0f;
-                Debug.Log($"Heart {i}: Empty");
+                heartFills[i].fillAmount = 0;
             }
         }
 
-        if (PlayerStats.Instance.Health % 1f != 0)
+        if (PlayerStats.Instance.Health % 1 != 0)
         {
-            int partialIndex = Mathf.FloorToInt(PlayerStats.Instance.Health);
-            float partialAmount = PlayerStats.Instance.Health % 1f;
-
-            if (partialIndex >= 0 && partialIndex < heartFills.Length)
-            {
-                heartFills[partialIndex].fillAmount = partialAmount;
-                Debug.Log($"Heart {partialIndex}: Partial fill = {partialAmount}");
-            }
+            int lastPos = Mathf.FloorToInt(PlayerStats.Instance.Health);
+            heartFills[lastPos].fillAmount = PlayerStats.Instance.Health % 1;
         }
     }
 
     void InstantiateHeartContainers()
+{
+    for (int i = 0; i < PlayerStats.Instance.MaxTotalHealth; i++)
     {
-        for (int i = 0; i < PlayerStats.Instance.MaxTotalHealth; i++)
+        Debug.Log($"Creating heart {i}");
+        GameObject temp = Instantiate(heartContainerPrefab);
+        temp.transform.SetParent(heartsParent, false);
+        heartContainers[i] = temp;
+
+        Transform heartFillTransform = temp.transform.Find("HeartFill");
+        if (heartFillTransform == null)
         {
-            GameObject temp = Instantiate(heartContainerPrefab);
-            temp.transform.SetParent(heartsParent, false);
-
-            heartContainers[i] = temp;
-
-            Transform fill = temp.transform.Find("HeartFill");
-            if (fill == null)
-            {
-                Debug.LogError($"HeartFill child not found in HeartContainer prefab at index {i}");
-                continue;
-            }
-
-            Image fillImage = fill.GetComponent<Image>();
-            if (fillImage == null)
-            {
-                Debug.LogError($"HeartFill at index {i} does not have an Image component!");
-                continue;
-            }
-
-            heartFills[i] = fillImage;
-
-            Debug.Log($"Instantiated Heart {i} under {heartsParent.name}, position: {temp.transform.position}");
+            Debug.LogError($"HeartFill child not found on heart {i}");
         }
+
+        heartFills[i] = heartFillTransform.GetComponent<Image>();
     }
+}
+
 }

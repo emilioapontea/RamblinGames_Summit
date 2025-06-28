@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a3b0d710906f3481fac1e9073ef11251
+guid: ec0b64c0b1dccc64d91eee52d85267bd
 timeCreated: 1528773206
 licenseType: Store
 MonoImporter:
@@ -10,3 +10,10 @@ MonoImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 120676
+  packageName: Simple Heart Health System
+  packageVersion: 1.0
+  assetPath: Assets/HealthHeartSystem/Scripts/PlayerStats.cs
+  uploadId: 286486

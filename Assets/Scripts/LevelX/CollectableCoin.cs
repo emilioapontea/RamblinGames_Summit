@@ -3,13 +3,15 @@ using UnityEngine;
 public class CollectableCoin : MonoBehaviour
 {
     public int coinValue = 1;
-    public AudioClip collectSound;
+    public AudioClip pickupSound;
+    private AudioSource audioSource;
 
     private bool isCollected = false;
 
     void Start()
     {
-        CoinManager.Instance.RegisterCoin();
+        CoinManager.Instance.RegisterGem();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void OnTriggerEnter(Collider other)
@@ -19,12 +21,13 @@ public class CollectableCoin : MonoBehaviour
         isCollected = true;
         Debug.Log("Coin Collected");
 
-        if (collectSound)
+        if (pickupSound)
         {
-            AudioSource.PlayClipAtPoint(collectSound, transform.position);
+            Debug.Log("playing sound");
+            AudioSource.PlayClipAtPoint(pickupSound, transform.position);
         }
 
-        CoinManager.Instance.CollectCoin(coinValue);
+        CoinManager.Instance.CollectGem();
 
         Destroy(gameObject);
     }

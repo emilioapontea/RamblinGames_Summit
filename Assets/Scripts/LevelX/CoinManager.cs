@@ -1,49 +1,88 @@
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
+using TMPro;  // Required for TextMeshProUGUI
 
 public class CoinManager : MonoBehaviour
 {
     public static CoinManager Instance;
 
-    private int totalCoins = 0;
-    private int collectedCoins = 0;
+    public int totalGems;
+    private int collectedGems;
 
-    public TextMeshProUGUI coinText;
+    public TextMeshProUGUI gemText;  // 👈 Assign in Inspector
+
+    public GameObject doorLeft;
+    public GameObject doorRight;
+    public Vector3 doorLeftOpenOffset = new Vector3(0, 6f, 0);
+    public Vector3 doorRightOpenOffset = new Vector3(0, 6f, 0);
+    public float doorOpenSpeed = 2f;
+
+    private bool doorsOpening = false;
+    private Vector3 doorLeftTarget;
+    private Vector3 doorRightTarget;
 
     void Awake()
     {
         if (Instance == null) Instance = this;
-        else Destroy(gameObject);
     }
 
     void Start()
     {
-        UpdateCoinUI();
+        UpdateGemText();  // Initial update
     }
 
-    public void RegisterCoin()
+    public void RegisterGem()
     {
-        totalCoins++;
-        UpdateCoinUI();
+        totalGems++;
+        UpdateGemText();
     }
 
-    public void CollectCoin(int value)
+    public void CollectGem()
     {
-        collectedCoins += value;
-        UpdateCoinUI();
+        collectedGems++;
+        UpdateGemText();
 
-        if (collectedCoins >= totalCoins)
+        if (collectedGems >= totalGems)
         {
-            Debug.Log("All coins collected!");
-            // doorToOpen.OpenDoor(); // Optional
+            Debug.Log("All gems collected!");
+            OpenDoors();
         }
     }
 
-    void UpdateCoinUI()
+    void UpdateGemText()
     {
-        if (coinText != null)
+        if (gemText != null)
+            gemText.text = $"Gems: {collectedGems} / {totalGems}";
+    }
+
+    void OpenDoors()
+    {
+        doorLeftTarget = doorLeft.transform.position + doorLeftOpenOffset;
+        doorRightTarget = doorRight.transform.position + doorRightOpenOffset;
+        doorsOpening = true;
+    }
+
+    void Update()
+    {
+        if (doorsOpening)
         {
-            coinText.text = $"Coins: {collectedCoins} / {totalCoins}";
+            doorLeft.transform.position = Vector3.MoveTowards(
+                doorLeft.transform.position,
+                doorLeftTarget,
+                doorOpenSpeed * Time.deltaTime
+            );
+
+            doorRight.transform.position = Vector3.MoveTowards(
+                doorRight.transform.position,
+                doorRightTarget,
+                doorOpenSpeed * Time.deltaTime
+            );
+
+            if (Vector3.Distance(doorLeft.transform.position, doorLeftTarget) < 0.01f &&
+                Vector3.Distance(doorRight.transform.position, doorRightTarget) < 0.01f)
+            {
+                doorsOpening = false;
+            }
         }
     }
 }
