@@ -8,6 +8,11 @@ public class IceBlockController : MonoBehaviour
     public float slideSpeed = 5f;            // Speed at which block slides
     public LayerMask obstacleMask;           // To detect obstacles
     private Animator anim;              // Animator for the block
+    private AudioSource audioSource; // Audio source for sound effects
+    /*
+    Ice block sound effect credit:
+    Ice Block - Sliding, Crunching, Scraping.wav by Percy Duke -- https://freesound.org/s/420634/ -- License: Attribution 3.0
+    */
 
     // Through tuning (!) found 0.5 is perfect for the ice blocks I'm using.
     // For forward compatibility, this approach should change...
@@ -26,6 +31,7 @@ public class IceBlockController : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
         this.Reset();
     }
@@ -45,6 +51,8 @@ public class IceBlockController : MonoBehaviour
                 );
                 this.transform.position = snappedPosition;
                 this.isSliding = false;
+
+                audioSource.Stop(); // Stop sliding sound effect
                 return;
             }
 
@@ -85,6 +93,13 @@ public class IceBlockController : MonoBehaviour
                 }
 
                 this.isSliding = true;
+                this.contactTime = 0f; // Reset contact time after starting slide
+
+                // Play sliding sound effect
+                if (audioSource != null && !audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
             }
             else
             {
