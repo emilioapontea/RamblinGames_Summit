@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 using System.Collections;
 
@@ -33,3 +34,4 @@ public class ThirdPersonCamera : MonoBehaviour
         }
     }
 }
+*/

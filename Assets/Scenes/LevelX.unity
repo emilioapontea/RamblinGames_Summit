@@ -772,7 +772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4fe1c55a48b343a0b15423b7360242a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: 
+  sceneToLoad: IcePuzzleLevel
   delayBeforeLoad: 0
 --- !u!65 &279306652
 BoxCollider:
@@ -1490,7 +1490,7 @@ GameObject:
   - component: {fileID: 611457424}
   - component: {fileID: 611457423}
   - component: {fileID: 611457427}
-  - component: {fileID: 611457426}
+  - component: {fileID: 611457428}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1572,24 +1572,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &611457426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 611457422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be8eb22e42f6d43eab39b7204d6628e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  positionSmoothTime: 1
-  rotationSmoothTime: 1
-  positionMaxSpeed: 50
-  rotationMaxSpeed: 50
-  desiredPose: {fileID: 44288794}
-  target: {fileID: 854306748}
 --- !u!114 &611457427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1634,6 +1616,24 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &611457428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 611457422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93dc04b401d744d218d981fce99c039e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positionSmoothTime: 1
+  rotationSmoothTime: 1
+  positionMaxSpeed: 50
+  rotationMaxSpeed: 50
+  desiredPose: {fileID: 44288794}
+  target: {fileID: 854306748}
 --- !u!1 &718863540 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4790708313801268591, guid: b3adb49b0af1a42e785541e1e1d8bd54, type: 3}
