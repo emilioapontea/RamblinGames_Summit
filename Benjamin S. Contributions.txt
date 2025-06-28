@@ -1,0 +1,27 @@
+- Created 4 scenes: title screen, controls screen, character testing scene, and Level 1 (tower entrance)
+
+- The title screen and controls screen are composed of a UI canvas with a few text elements, and buttons to proceed to a set destination scene.
+
+- The character test scene is not meant to be part of the game, but it contains a small play area with a ramp, fences, and a pillar to test character movement and collision.
+
+- I have created a player character to be used for the CharacterTest and Level1 scenes. This player consists of a cylinder collider (no actual model yet) with various features. 
+
+- The player character can be moved in four directions using the W/A/S/D keys, and can turn in place using the O and P keys. Turning the character also moves the camera so that it remains pointed at the character's back. The character's controls should seem consistent as the camera rotates (e.g. pressing the W key always causes the player to move in the direction the camera is facing).
+
+- The player character can jump by pressing the spacebar. Like many platformer games, the player's jump height increases the longer spacebar is held down for.
+
+- The player character has the ability to die by falling in the moat surrounding the tower, causing the game to stop time, and display a message prompting the user to press the R key to reset the level. The R key can only be used to reset the level after the player has died.
+
+- The 'Level1' scene is intended to be the tower entrance. This area is mainly here to allow the player to experiment with the controls in a safe area. I tried to add a bit of atmosphere by adding a drawbridge, and some lighting effects in the tower entrance room.
+
+- Level 1 has a drawbridge which makes use of an invisible trigger zone to detect that the player character is near the drawbridge. The drawbridge uses mecanim to lower the bridge when the player moves into the trigger zone, and to raise the bridge when the player leaves the trigger zone.
+
+- A pause screen can be accessed in the 'Level1' and 'CharacterTest' scenes by pressing the Escape key. The pause menu stops the game while visible, and has a button to reset the current scene, and another button to terminate the game. Pressing the Escape key while the pause menu is open will close the pause menu and resume time in the scene.
+
+- Reaching an invisible win area within the 'Level1' scene (placed at some stairs leading further up the tower) will cause a level complete message to appear. This message prompts the player to press the Enter key to move onto the next level (which can be set in the inspector).
+
+- I have added a few sound effects to the 'Level1' scene.
+1. The player character plays an effect upon jumping.
+2. The player character plays an effect upon landing.
+3. The player character plays an effect upon dying.
+4. The drawbridge plays an effect upon a player character entering or exiting the trigger zone, signaling that the drawbridge is going to be raised or lowered.
