@@ -23,6 +23,7 @@ public class WinHandler : MonoBehaviour
 
     public void WinLevel()
     {
+        PauseMenuToggle.allowUnpause = false; // Disable unpausing through pause menu
         winCanvas.alpha = 1f;
         winCanvas.interactable = true;
         winCanvas.blocksRaycasts = true;

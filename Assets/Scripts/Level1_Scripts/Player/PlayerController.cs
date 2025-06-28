@@ -24,6 +24,29 @@ public class PlayerController : MonoBehaviour
     /// The rate (in degrees) at which the player will turn on every fixed update.
     /// </summary>
     public float turningSpeed = 2.0f;
+    [Header("Player SFX")]
+    /// <summary>
+    /// Set this field to false to prevent the player from playing sound effects.
+    /// </summary>
+    [SerializeField] private bool playSoundEffects = true;
+    /// <summary>
+    /// The Audio Source that plays the jumping sound effect.
+    /// </summary>
+    public AudioSource jumpPlayer;
+    /// <summary>
+    /// The Audio Source that plays the landing sound effect.
+    /// </summary>
+    public AudioSource landPlayer;
+    /// <summary>
+    /// The audio source that plays the player death sound effect.
+    /// </summary>
+    public AudioSource deathPlayer;
+    /// <summary>
+    /// Used to check when the player transitions from grounded to jumping,
+    /// and from airborne to grounded. This field is only used for the purposes
+    /// of playing sound effects.
+    /// </summary>
+    private bool airborne;
     [Header("References")]
     public LoseHandler loseScript;
     [Header("Debug")]
@@ -44,6 +67,8 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("Player object could not find a lose game script.");
         }
+        // Allow death SFX to play even when game is paused
+        deathPlayer.ignoreListenerPause = true;
     }
 
     void FixedUpdate()
@@ -79,19 +104,30 @@ public class PlayerController : MonoBehaviour
             // Draw raycast in the direction player is facing
             Debug.DrawRay(transform.position, transform.forward * 10, Color.red);
         }
+
+        if (airborne && rb.linearVelocity.y == 0)
+        {
+            // Play the landing sound effect on the first frame the player is no longer airborne
+            airborne = false;
+            if (playSoundEffects) landPlayer.Play();
+        }
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Respawn"))
         {
+            deathPlayer.Play();
             Death();
         }
     }
 
     bool IsGrounded()
     {
-        //Allow the jump if the player is grounded (i.e., is in contact with the floor)
+        // Allow the jump if the player is grounded (i.e., is in contact with the floor)
+        // To allow for the player to jump higher by holding the jump button,
+        // the raycast should extend slightly below the player.
+        // This allows the player to hold the jump button to extend the jump.
         if (Physics.Raycast(transform.position, Vector3.down, 1.5f))
         {
             return true;
@@ -111,6 +147,13 @@ public class PlayerController : MonoBehaviour
         //Allow the jump if the player is grounded (i.e., is in contact with the floor)
         if (IsGrounded())
         {
+            if (!airborne)
+            {
+                // Play the jumping sound effect once upon jumping
+                // Airborne should only be reset to false upon landing
+                airborne = true;
+                if (playSoundEffects) jumpPlayer.Play();
+            }
             return new Vector3(0.0f, jumpPower, 0.0f);
         }
         else
@@ -133,7 +176,7 @@ public class PlayerController : MonoBehaviour
 
     void Death()
     {
-        Destroy(gameObject);
+        if (playSoundEffects) deathPlayer.Play();
         loseScript.LoseGame();
     }
 }

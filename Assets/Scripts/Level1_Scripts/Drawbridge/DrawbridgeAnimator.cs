@@ -4,9 +4,10 @@ using UnityEngine;
 public class DrawbridgeAnimator : MonoBehaviour
 {
     /// <summary>
-    /// Refernce to drawbridge's animator.
+    /// Reference to drawbridge's animator.
     /// </summary>
     private Animator bridgeAnimator;
+    public DrawbridgeAudioPlayer audioPlayer;
     /// <summary>
     /// Should debug log messages be printed?
     /// If disabled, debug error messages will still be printed.
@@ -22,6 +23,7 @@ public class DrawbridgeAnimator : MonoBehaviour
     public void RaiseBridge()
     {
         if (debugMessages) Debug.Log("Raising Bridge");
+        audioPlayer.PlayBridgeSound();
         bridgeAnimator.ResetTrigger("Lower");
         bridgeAnimator.SetTrigger("Raise");
     }
@@ -29,6 +31,7 @@ public class DrawbridgeAnimator : MonoBehaviour
     public void LowerBridge()
     {
         if (debugMessages) Debug.Log("Lowering Bridge");
+        audioPlayer.PlayBridgeSound();
         bridgeAnimator.ResetTrigger("Raise");
         bridgeAnimator.SetTrigger("Lower");
     }

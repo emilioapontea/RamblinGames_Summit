@@ -4,9 +4,15 @@ using UnityEngine;
 public class PauseMenuToggle : MonoBehaviour
 {
     private CanvasGroup canvasGroup;
+    /// <summary>
+    /// Whether the game should unpause upon closing the pause menu.
+    /// Disable this upon level completion or player death
+    /// </summary>
+    public static bool allowUnpause = true;
 
     void Awake()
     {
+        allowUnpause = true; // Allow unpausing upon scene load
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null)
         {
@@ -26,7 +32,7 @@ public class PauseMenuToggle : MonoBehaviour
                 canvasGroup.alpha = 0f;
 
                 // Unpause the game upon disabling the canvas
-                Time.timeScale = 1f;
+                if (allowUnpause) Time.timeScale = 1f;
             }
             else
             {

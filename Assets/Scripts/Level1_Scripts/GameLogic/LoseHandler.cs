@@ -23,6 +23,7 @@ public class LoseHandler : MonoBehaviour
     public void LoseGame()
     {
         Time.timeScale = 0f;
+        PauseMenuToggle.allowUnpause = false; // Disable unpausing through pause menu
         loseCanvas.alpha = 1f;
         loseCanvas.interactable = true;
         loseCanvas.blocksRaycasts = true;
