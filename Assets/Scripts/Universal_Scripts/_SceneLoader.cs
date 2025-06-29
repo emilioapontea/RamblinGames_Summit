@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,3 +16,4 @@ public class SceneLoader : MonoBehaviour
         Time.timeScale = 1f; // Ensure time scale is reset when starting a new game
     }
 }
+*/

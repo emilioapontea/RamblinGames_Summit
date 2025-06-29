@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 [RequireComponent(typeof(CanvasGroup))]
 
@@ -42,3 +43,4 @@ public class PauseMenuToggle : MonoBehaviour
         }
     }
 }
+*/
