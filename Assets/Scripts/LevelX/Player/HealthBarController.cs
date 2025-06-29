@@ -70,16 +70,13 @@ public class HealthBarController : MonoBehaviour
 {
     for (int i = 0; i < PlayerStats.Instance.MaxTotalHealth; i++)
     {
-        Debug.Log($"Creating heart {i}");
+
         GameObject temp = Instantiate(heartContainerPrefab);
         temp.transform.SetParent(heartsParent, false);
         heartContainers[i] = temp;
 
         Transform heartFillTransform = temp.transform.Find("HeartFill");
-        if (heartFillTransform == null)
-        {
-            Debug.LogError($"HeartFill child not found on heart {i}");
-        }
+
 
         heartFills[i] = heartFillTransform.GetComponent<Image>();
     }
