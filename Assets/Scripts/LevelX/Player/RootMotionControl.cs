@@ -20,7 +20,7 @@ public class RootMotionControl : MonoBehaviour
 
     [Header("Speed Control")]
     public float animationSpeed = 1.0f;
-    public float rootMovementSpeed = 1.0f;
+    public float rootMovementSpeed = 2.0f;
 
     [Header("Jump Settings")]
     public float jumpForce = 5f;
@@ -70,7 +70,6 @@ public class RootMotionControl : MonoBehaviour
 
         anim.SetFloat("velx", _inputTurn);
         anim.SetFloat("vely", _inputForward);
-        anim.SetBool("isFalling", !isGrounded);
 
         if (jumpPressed && isGrounded)
         {
@@ -98,7 +97,7 @@ public class RootMotionControl : MonoBehaviour
         if (collision.transform.CompareTag("Ground"))
         {
             groundContactCount++;
-            Debug.Log($"Landed, ground contact: {groundContactCount}");
+
         }
     }
 
@@ -107,7 +106,7 @@ public class RootMotionControl : MonoBehaviour
         if (collision.transform.CompareTag("Ground"))
         {
             groundContactCount--;
-            Debug.Log($"Left Ground, ground contact: {groundContactCount}");
+
         }
     }
 }

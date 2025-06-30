@@ -100,7 +100,7 @@ public class BasicControlScript : MonoBehaviour
 
         // anim.SetFloat("velx", inputTurn);
         anim.SetFloat("vely", inputForward);
-        anim.SetBool("isFalling", !isGrounded);
+        //anim.SetBool("isFalling", !isGrounded);
 
     }
 
