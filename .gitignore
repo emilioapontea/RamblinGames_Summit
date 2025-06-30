@@ -87,3 +87,7 @@ crashlytics-build.properties
 
 # OSX
 **/.DS_Store
+
+# zip files becase why would you ever want to commit one of those
+*.zip
+*.zip.meta
