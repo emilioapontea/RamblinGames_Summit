@@ -91,3 +91,5 @@ crashlytics-build.properties
 # zip files becase why would you ever want to commit one of those
 *.zip
 *.zip.meta
+
+*.blob
