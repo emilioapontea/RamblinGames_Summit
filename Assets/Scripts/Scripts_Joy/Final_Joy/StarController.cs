@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StarController : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class StarController : MonoBehaviour
     private bool isActive = false;
 
     private Vector3 originalScale;
+    public string nextSceneName;
 
     void Start()
     {
@@ -102,7 +104,8 @@ public class StarController : MonoBehaviour
                     isActive = false;
                     gameObject.SetActive(false);
 
-                    FindObjectOfType<MushroomManager>()?.ShowWinPanel();
+                    // FindObjectOfType<MushroomManager>()?.ShowWinPanel();
+                    SceneManager.LoadScene(nextSceneName);
                     break;
             }
 

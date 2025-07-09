@@ -12,7 +12,7 @@ public class MushroomManager : MonoBehaviour
     public Image iceIcon;
 
     // Win panel
-    public GameObject winPanel;
+    // public GameObject winPanel;
 
     public GameObject star; // Assign in inspector
 
@@ -83,13 +83,13 @@ public class MushroomManager : MonoBehaviour
         }
     }
 
-    public void ShowWinPanel()
-    {
-        winPanel.SetActive(true);
-        Time.timeScale = 0f;
-        AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxWin);
-        Debug.Log("You Win!");
-    }
+    // public void ShowWinPanel()
+    // {
+    //     winPanel.SetActive(true);
+    //     Time.timeScale = 0f;
+    //     AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxWin);
+    //     Debug.Log("You Win!");
+    // }
 
     // UI Button Callbacks
     public void OnRestart()

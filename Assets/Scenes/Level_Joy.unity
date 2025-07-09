@@ -4256,7 +4256,6 @@ MonoBehaviour:
   powerIcon: {fileID: 1117435897}
   lavaIcon: {fileID: 1117435896}
   iceIcon: {fileID: 1117435895}
-  winPanel: {fileID: 1600976085}
   star: {fileID: 1239852361}
   chord1: {fileID: 8300000, guid: d9fc75b9289c87c4ebbbdf9e8adcf5d9, type: 3}
   chord2: {fileID: 8300000, guid: a23bc1dd2bbb01b48b44dea6bb7671e6, type: 3}
@@ -7592,6 +7591,7 @@ MonoBehaviour:
   secondCollectSound: {fileID: 8300000, guid: edb294afa169ee6439cc031d37312378, type: 3}
   winSound: {fileID: 8300000, guid: d4ad61e1e1307474bb568e89c3e5ec36, type: 3}
   audioSource: {fileID: 1503768595}
+  nextSceneName: End
 --- !u!23 &1239852364
 MeshRenderer:
   m_ObjectHideFlags: 0
