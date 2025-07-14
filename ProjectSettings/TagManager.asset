@@ -6,6 +6,8 @@ TagManager:
   tags:
   - ground
   - ice_cube
+  - Ground
+  - water
   layers:
   - Default
   - TransparentFX

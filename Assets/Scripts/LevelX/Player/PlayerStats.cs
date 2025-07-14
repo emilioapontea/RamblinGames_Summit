@@ -63,5 +63,15 @@ public class PlayerStats : MonoBehaviour
 
         if (onHealthChangedCallback != null)
             onHealthChangedCallback.Invoke();
+
+        if (health <= 0)
+    {
+        // Call the death handler
+        PlayerDeath deathHandler = FindObjectOfType<PlayerDeath>();
+        if (deathHandler != null)
+        {
+            deathHandler.HandleDeath();
+        }
+    }
     }
 }
