@@ -7,7 +7,7 @@ public class CoinManager : MonoBehaviour
     public static CoinManager Instance;
 
     public int totalGems;
-    private int collectedGems;
+    public int collectedGems;
 
     public TextMeshProUGUI gemText;  // 👈 Assign in Inspector
 
@@ -42,11 +42,14 @@ public class CoinManager : MonoBehaviour
         collectedGems++;
         UpdateGemText();
 
+        /*  
+        //Changed so guard opens doors instead of it opening automatically.
         if (collectedGems >= totalGems)
         {
             Debug.Log("All gems collected!");
             OpenDoors();
         }
+        */
     }
 
     void UpdateGemText()
@@ -55,7 +58,7 @@ public class CoinManager : MonoBehaviour
             gemText.text = $"Gems: {collectedGems} / {totalGems}";
     }
 
-    void OpenDoors()
+    public void OpenDoors()
     {
         doorLeftTarget = doorLeft.transform.position + doorLeftOpenOffset;
         doorRightTarget = doorRight.transform.position + doorRightOpenOffset;
