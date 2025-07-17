@@ -5735,6 +5735,131 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1733963203}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1747484955
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1011390590405420117, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: dialogLines.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011390590405420117, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: dialogLines.Array.data[0].line
+      value: Good job, agent <color=white>Luna</color>! It seems some of <color=#fc0390>Princess
+        Peach's</color> minions are quite helpful. You have now entered the princess's
+        <color=#00b9ff>Ice Room</color>.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011390590405420117, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: dialogLines.Array.data[1].line
+      value: My intel suggests that the princess uses this room to house her visitors
+        from the <color=#00b9ff>Ice Kingdom</color>, although it appears to have
+        a <i>secondary purpose</i> as some sort of <color=#fc0390>magic lock</color>.
+        You need to find some way to open that <color=#a5292a>door</color>...
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011390590405420117, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: dialogLines.Array.data[2].line
+      value: The <color=#00b9ff>icy terrain</color> appears to be quite slippery...
+        <color=#00b9ff>Ice Kingdom penguins</color> use it to slide around and play.
+        I bet you could <i>use the slippery floors</i> to move those heavy <color=#00b9ff>ice
+        blocks</color>, although I'm not sure how that will help you...
+      objectReference: {fileID: 0}
+    - target: {fileID: 3053487334136318301, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_Name
+      value: DialogCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624909108812825267, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a32babdaa3b8a41288d683036aa3c2b0, type: 3}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
 --- !u!1 &1762800940
 GameObject:
   m_ObjectHideFlags: 0
@@ -7489,6 +7614,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 711872123}
   - {fileID: 3078517729023664674}
+  - {fileID: 1747484955}
   - {fileID: 330585546}
   - {fileID: 1208753331}
   - {fileID: 832575519}

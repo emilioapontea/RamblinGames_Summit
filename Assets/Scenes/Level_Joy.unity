@@ -1956,7 +1956,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 281296374}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27293646bee07ea459406720e7af9f93, type: 3}
   m_Name: 
@@ -2003,7 +2003,7 @@ Transform:
   m_GameObject: {fileID: 294440962}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.97, y: 1.5, z: 34.57}
+  m_LocalPosition: {x: -10.51, y: 1.5, z: 29.68}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6922,6 +6922,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StatusBar Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 7759262194716046163, guid: e1b9a9520aee444cba7bc217991f95ab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7780606710948122029, guid: e1b9a9520aee444cba7bc217991f95ab, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -10119,6 +10123,136 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1600976085}
   m_CullTransparentMesh: 1
+--- !u!1001 &1622659296
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1011390590405420117, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: dialogLines.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011390590405420117, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: dialogLines.Array.data[0].line
+      value: <color=red>AH HA HA!!!</color> Well done, Agent. You have made your
+        way to the top floor of <color=#fc0390>Princess Peach's Castle</color>. The
+        <color=yellow>Star</color> must be around here somewhere... I just <i>know</i>
+        it.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011390590405420117, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: dialogLines.Array.data[1].line
+      value: Keep and eye out for special tricks and obstacles here, we cannot underestimate
+        the <color=#fc0390>Princess</color>.  <color=orange>Lava</color> and <color=#00b9ff>ice</color>
+        puddles are not safe to walk on, so be careful.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011390590405420117, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: dialogLines.Array.data[2].line
+      value: This room <i>reeks</i> of that little <color=red>mushroom obsessed plumber</color>...
+        I wonder if those <color=red>mushrooms</color> will grant you special abilities
+        like they do for <color=red>him</color>...
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011390590405420117, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: dialogLines.Array.data[3].line
+      value: You must remember that the <color=yellow>Star</color> is a little bit
+        of a <i>rascal</i>. If you do end up finding it it might put up a fight...
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011390590405420117, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: dialogLines.Array.data[4].line
+      value: Good luck out there, agent <color=white>Luna</color>.  <i>All of <color=red>Bowser's
+        Kingdom</color> is counting on you</i>.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3053487334136318301, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_Name
+      value: DialogCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8684629385398453701, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
 --- !u!1 &1649276639
 GameObject:
   m_ObjectHideFlags: 0
@@ -13059,6 +13193,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1117435893}
+  - {fileID: 1622659296}
   - {fileID: 2145613792}
   - {fileID: 1907695774}
   - {fileID: 482352719}
