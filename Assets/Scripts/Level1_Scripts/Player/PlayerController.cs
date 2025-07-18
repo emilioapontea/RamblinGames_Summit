@@ -5,26 +5,24 @@ using UnityEngine.SceneManagement;
 using System.Numerics;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
+using Unity.Mathematics;
 
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
-    private float velocityX;
-    private float velocityY;
-    private float velocityZ;
-    [Header("Player Model Settings")]
     /// <summary>
     /// The player's visible character model. This should not be the player's collision.
     /// </summary>
+    [Header("Player Model Settings")]
     public GameObject playerModel;
     /// <summary>
     /// Speed at which the visible player model should turn towards the direction of movement.
     /// </summary>
     public float playerModelTurnSpeed = 10.0f;
-    [Header("Player Parameters")]
     /// <summary>
     /// Magnitude of force applied to player while moving laterally.
     /// </summary>
+    [Header("Player Parameters")]
     public float movementSpeed = 2.0f;
     /// <summary>
     /// Magnitude of vertical force applied to player upon jumping.
@@ -44,12 +42,12 @@ public class PlayerController : MonoBehaviour
     /// How many walljumps the player can perform on a jumpable wall before
     /// the player must land on the ground to recharge walljumps.
     /// </summary>
-    public readonly int maxWalljumps = 3;
+    public int maxWalljumps = 3;
     /// <summary>
-    /// How much force will be applied in the direction opposite the player is facing
+    /// How much force will be applied in the direction opposite the wall the player jumps off
     /// when the player performs a walljump.
     /// </summary>
-    public float walljumpForce = 2.0f;
+    public float walljumpKickbackForce = 2.0f;
     /// <summary>
     /// The multiplier to apply to the vertical component of the walljump force vector.
     /// </summary>
@@ -62,10 +60,11 @@ public class PlayerController : MonoBehaviour
     public float walljumpDelay = 1.0f;
     private float walljumpTimer;
     private int walljumpCharges;
-    [Header("Player SFX")]
+    private ContactPoint walljumpContactPoint;
     /// <summary>
     /// Set this field to false to prevent the player from playing sound effects.
     /// </summary>
+    [Header("Player SFX")]
     [SerializeField] private bool playSoundEffects = true;
     /// <summary>
     /// The Audio Source that plays the jumping sound effect.
@@ -84,6 +83,14 @@ public class PlayerController : MonoBehaviour
     /// and from airborne to grounded. This field is only used for the purposes
     /// of playing sound effects.
     /// </summary>
+    private Animator anim;
+    /// <summary>
+    /// Max speed of playern run animation. Animation speed is set to 1 when player is motionless,
+    /// and is linearlly interpolated to this value as the player gains speed so that the running
+    /// animation speeds up as the player gains speed.
+    /// </summary>
+    [Header("Player Animation")]
+    public float maxAnimationSpeed = 3f;
     private int groundContactCount = 0;
     private bool Grounded => groundContactCount > 0;
     private bool airborne;
@@ -91,11 +98,11 @@ public class PlayerController : MonoBehaviour
     private bool CanWalljump => (walljumpWallContactCount > 0 && walljumpCharges > 0 && walljumpTimer <= 0f);
     [Header("References")]
     public LoseHandler loseScript;
-    [Header("Debug")]
     /// <summary>
     /// Show the physics raycast used to test if player is grounded?
     /// Gizmos must also be set to visible for raycast to be seen.
     /// </summary>
+    [Header("Debug")]
     [SerializeField] private bool showGroundedRaycast = false;
     /// <summary>
     /// Draw a raycast in the direction the player is facing?
@@ -107,14 +114,10 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         walljumpCharges = maxWalljumps;
         walljumpTimer = walljumpDelay;
-        if (loseScript == null)
-        {
-            Debug.LogError("Player object could not find a lose game script.");
-        }
-        if (playerModel == null)
-        {
-            Debug.LogError("Player object could not find a reference to a visible model.");
-        }
+        anim = GetComponentInChildren<Animator>();
+        if (loseScript == null) Debug.LogError("PlayerController: Player object could not find a lose game script.");
+        if (playerModel == null) Debug.LogError("PlayerController: Player object could not find a reference to a visible model.");
+        if (anim == null) Debug.LogError("PlayerController: Player object could not find animator component in children.");
         // Allow death SFX to play even when game is paused
         deathPlayer.ignoreListenerPause = true;
     }
@@ -138,6 +141,10 @@ public class PlayerController : MonoBehaviour
             // No input is being made, decelerate the player character
             rb.AddForce(-1 * decelerationForce * rb.linearVelocity);
         }
+
+        float animationVelocity = Mathf.Lerp(0f, 1f, rb.linearVelocity.magnitude / 10);
+        anim.SetFloat("velocity", Mathf.Lerp(0f, 1f, animationVelocity));
+        anim.SetFloat("animSpeed", Mathf.Lerp(1f, maxAnimationSpeed, animationVelocity));
 
         Vector3 jump = CheckJump();
         rb.AddForce(jump, ForceMode.Impulse);
@@ -170,6 +177,7 @@ public class PlayerController : MonoBehaviour
         {
             // Play the landing sound effect on the first frame the player is no longer airborne
             airborne = false;
+            anim.SetTrigger("land");
             if (playSoundEffects) landPlayer.Play();
             walljumpCharges = maxWalljumps; // Reset walljump charges
         }
@@ -214,6 +222,7 @@ public class PlayerController : MonoBehaviour
                 // Play the jumping sound effect once upon jumping
                 // Airborne should only be reset to false upon landing
                 airborne = true;
+                anim.SetTrigger("airborne");
                 if (playSoundEffects) jumpPlayer.Play();
             }
             walljumpTimer = walljumpDelay;
@@ -227,7 +236,10 @@ public class PlayerController : MonoBehaviour
             if (playSoundEffects) jumpPlayer.Play();
             walljumpCharges--;
             walljumpTimer = walljumpDelay;
-            Vector3 wallJumpVector = -1 * walljumpForce * playerModel.transform.forward;
+            // Reset the player's vertical velocity so that the walljump gains a consistent amount of height
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+            // Send the player away from the wall
+            Vector3 wallJumpVector = 1 * walljumpKickbackForce * walljumpContactPoint.normal;
             Vector3 jumpVector = new Vector3(wallJumpVector.x, jumpPower * walljumpVerticalMultiplier, wallJumpVector.z);
             return jumpVector;
         }
@@ -280,6 +292,8 @@ public class PlayerController : MonoBehaviour
         if (collision.transform.CompareTag("WalljumpWall"))
         {
             walljumpWallContactCount++;
+            // Set walljump Contact Point reference to latest point of contact
+            walljumpContactPoint = collision.GetContact(0);
         }
     }
 
@@ -289,6 +303,7 @@ public class PlayerController : MonoBehaviour
         {
             groundContactCount--;
         }
+
         if (collision.transform.CompareTag("WalljumpWall"))
         {
             walljumpWallContactCount--;
