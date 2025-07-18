@@ -26,6 +26,7 @@ public class IceBlockController : MonoBehaviour
         // set { isSliding = value; }
     }
     private Vector3 slideDirection;
+    private Vector3 pusherPosition; // Position of the player pushing the block
     private float contactTime = 0f;
 
     void Start()
@@ -70,6 +71,11 @@ public class IceBlockController : MonoBehaviour
     {
         if (this.isSliding) return;
         this.contactTime = 0f; // Reset contact time on new collision
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // Store the position of the player pushing the block
+            this.pusherPosition = collision.gameObject.transform.position;
+        }
     }
 
     void OnCollisionStay(Collision collision)
@@ -105,6 +111,8 @@ public class IceBlockController : MonoBehaviour
             {
                 // Increase contact time while in contact
                 this.contactTime += Time.deltaTime;
+                // collision.gameObject.GetComponent<PlayerController>().SetPushingBlock(true); // perhaps a smarter way to do this...
+                // collision.gameObject.transform.position = this.pusherPosition; // Keep player in place while pushing
                 // Debug.Log($"Contact time: {contactTime}");
             }
 

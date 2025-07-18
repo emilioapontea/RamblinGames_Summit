@@ -26,7 +26,7 @@ public class PauseMenuToggle : MonoBehaviour
     /// <summary>
     /// Reference to the audio source playing the scene's music.
     /// </summary>
-    public AudioSource musicSource;
+    // public AudioSource musicSource;
     /// <summary>
     /// Should the music track pause when the game is paused?
     /// </summary>
@@ -40,10 +40,10 @@ public class PauseMenuToggle : MonoBehaviour
         {
             Debug.LogError("GameManager: Could not find CanvasGroup component in UI Canvas.");
         }
-        if (musicSource == null)
-        {
-            Debug.LogError("GameManager: Music Audio Source reference is missing.");
-        }
+        // if (musicSource == null)
+        // {
+        //     Debug.LogError("GameManager: Music Audio Source reference is missing.");
+        // }
         if (playPauseSoundEffects)
         {
             if (pauseSoundEffect == null)
@@ -69,7 +69,7 @@ public class PauseMenuToggle : MonoBehaviour
                 canvasGroup.alpha = 0f;
 
                 // Unpause the music (if previously paused)
-                if (stopMusicOnPause && allowUnpause) musicSource.Play();
+                if (stopMusicOnPause && allowUnpause) BackgroundAudioManager.Instance.Play();
 
                 // Play the unpause sound effect (if enabled)
                 if (playPauseSoundEffects) unpauseSoundEffect.Play();
@@ -85,7 +85,7 @@ public class PauseMenuToggle : MonoBehaviour
                 canvasGroup.alpha = 1f;
 
                 // Pause the music
-                if (stopMusicOnPause) musicSource.Pause();
+                if (stopMusicOnPause) BackgroundAudioManager.Instance.Pause();
 
                 // Play the pause sound effect (if enabled)
                 if (playPauseSoundEffects) pauseSoundEffect.Play();
