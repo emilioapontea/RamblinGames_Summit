@@ -1,5 +1,8 @@
 using UnityEngine;
 using System.Collections;
+using System.Numerics;
+using Vector3 = UnityEngine.Vector3;
+using Quaternion = UnityEngine.Quaternion;
 
 public class ThirdPersonCamera : MonoBehaviour
 {
@@ -9,6 +12,12 @@ public class ThirdPersonCamera : MonoBehaviour
     public float rotationMaxSpeed = 2f;
     public Transform desiredPose;			// the desired pose for the camera, specified by a transform in the game
     public Transform target;
+    /// <summary>
+    /// If checked, camera position will be moved closer to the target
+    /// to keep the target visible if there is a collider blocking a raycast
+    /// between the target and the desired camera pose.
+    /// </summary>
+    public bool forceVisibleTarget = false;
 
     protected Vector3 currentPositionCorrectionVelocity;
     //protected Vector3 currentFacingCorrectionVelocity;
@@ -24,19 +33,25 @@ public class ThirdPersonCamera : MonoBehaviour
 
     void LateUpdate()
     {
-
         if (desiredPose != null)
         {
-            transform.position = Vector3.SmoothDamp(transform.position, desiredPose.position, ref currentPositionCorrectionVelocity, positionSmoothTime, positionMaxSpeed, Time.deltaTime);
-
-            var targForward = desiredPose.forward;
-            //var targForward = (target.position - this.transform.position).normalized;
-
-            transform.rotation = QuaternionUtil.SmoothDamp(transform.rotation,
-                Quaternion.LookRotation(targForward, Vector3.up), ref quaternionDeriv, rotationSmoothTime);
-
+            RaycastHit hit;
+            if (!forceVisibleTarget || !CheckTargetBlocked(out hit))
+            {
+                transform.position = Vector3.SmoothDamp(transform.position, desiredPose.position, ref currentPositionCorrectionVelocity, positionSmoothTime, positionMaxSpeed, Time.deltaTime);
+                var targForward = desiredPose.forward;
+                transform.rotation = QuaternionUtil.SmoothDamp(transform.rotation,
+                    Quaternion.LookRotation(targForward, Vector3.up), ref quaternionDeriv, rotationSmoothTime);
+            }
+            else
+            {
+                // If camera blocked by collider, move camera to collider position instead of desired pose
+                transform.position = Vector3.SmoothDamp(transform.position, hit.point, ref currentPositionCorrectionVelocity, positionSmoothTime, positionMaxSpeed, Time.deltaTime);
+                var targForward = desiredPose.forward;
+                transform.rotation = QuaternionUtil.SmoothDamp(transform.rotation,
+                    Quaternion.LookRotation(targForward, Vector3.up), ref quaternionDeriv, rotationSmoothTime);
+            }
         }
-        // SpinCamera();
     }
 
     void SpinCamera()
@@ -50,6 +65,19 @@ public class ThirdPersonCamera : MonoBehaviour
         if (Input.GetKey(KeyCode.P))
         {
             desiredPose.RotateAround(target.position, Vector3.up, rotationMaxSpeed);
+        }
+    }
+
+    bool CheckTargetBlocked(out RaycastHit hitTracker)
+    {
+        Vector3 TargetToCamera = desiredPose.position - target.position;
+        if (Physics.Raycast(target.position, TargetToCamera, out hitTracker, TargetToCamera.magnitude))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }

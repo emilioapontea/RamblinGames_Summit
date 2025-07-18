@@ -8,6 +8,7 @@ TagManager:
   - ice_cube
   - Ground
   - water
+  - WalljumpWall
   layers:
   - Default
   - TransparentFX
