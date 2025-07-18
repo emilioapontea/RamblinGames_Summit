@@ -25,4 +25,20 @@ public class BackgroundAudioManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void Play()
+    {
+        if (!audioSource.isPlaying)
+        {
+            audioSource.Play();
+        }
+    }
+
+    public void Pause()
+    {
+        if (audioSource.isPlaying)
+        {
+            audioSource.Pause();
+        }
+    }
 }

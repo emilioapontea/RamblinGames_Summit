@@ -32,4 +32,15 @@ public class SignTrigger : MonoBehaviour
             signCanvas.alpha = 0f;
         }
     }
+
+    private void FixedUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.Return) && signCanvas.alpha > 0f)
+        {
+            // Hide the sign when ENTER is pressed
+            signCanvas.interactable = false;
+            signCanvas.blocksRaycasts = false;
+            signCanvas.alpha = 0f;
+        }
+    }
 }
