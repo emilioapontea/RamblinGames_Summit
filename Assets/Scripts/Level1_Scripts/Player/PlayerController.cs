@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour
     private float velocityY;
     private float velocityZ;
     public Camera CarCam;
+    public GameObject EnemyCar;
+    public TMPro.TMP_Text lapCounterText; 
+    private int currentLap = 0;
+
     [Header("Player Parameters")]
     /// <summary>
     /// Magnitude of force applied to player while moving laterally.
@@ -65,6 +69,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool showDirectionRaycast = false;
     void Start()
     {
+        lapCounterText.gameObject.SetActive(false); // Hide lap counter at start
+        EnemyCar.SetActive(false); // Disable enemy car at start
         rb = GetComponent<Rigidbody>();
         if (loseScript == null)
         {
@@ -125,10 +131,17 @@ public class PlayerController : MonoBehaviour
             airborne = false;
             if (playSoundEffects) landPlayer.Play();
         }
+
+        
     }
 
     void OnTriggerEnter(Collider other)
     {
+        if(other.CompareTag("Finish"))
+        {
+            Debug.Log("Player has completed a lap!");
+            CompleteLap();
+        }
         if (other.CompareTag("PlayerCar"))
         {
             Debug.Log("Player is near car");
@@ -149,6 +162,35 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void CompleteLap() {
+        currentLap++;
+        if (lapCounterText != null)
+        {
+            lapCounterText.text = $"Lap: {currentLap}/1"; // Assuming 3 laps for this example
+        }
+        if (currentLap >= 2)
+        {
+            ExitCar();
+        }
+    }
+
+    void ExitCar()
+    {
+        transform.SetParent(null);
+        foreach (var renderer in GetComponentsInChildren<Renderer>())
+        {
+            renderer.enabled = true;
+        }
+        // Enable player movement
+        rb.isKinematic = false;
+        this.enabled = true; 
+        playerCar.GetComponent<CarController>().enabled = false;
+        Camera.main.enabled = true;
+        CarCam.enabled = false;
+        EnemyCar.SetActive(false);
+        lapCounterText.gameObject.SetActive(false);
+    }
+
     void EnterCar()
     {
         transform.rotation = playerCar.transform.rotation; 
@@ -165,7 +207,11 @@ public class PlayerController : MonoBehaviour
         SwitchCameraToCar();
         Camera.main.enabled = false;
         CarCam.enabled = true;
+        EnemyCar.SetActive(true);
+        lapCounterText.gameObject.SetActive(true);
+        lapCounterText.text = $"Lap: {currentLap}/1";
     }
+
     bool IsGrounded()
     {
         // Allow the jump if the player is grounded (i.e., is in contact with the floor)

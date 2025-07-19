@@ -8,7 +8,7 @@ public class CarController : MonoBehaviour
     public float bufferDistance = 0.5f;
 
     void Update()
-    {
+    {   
         float turn = Input.GetAxis("Horizontal") * turnSpeed * Time.deltaTime;
         float move = -Input.GetAxis("Vertical") * speed * Time.deltaTime;
 
@@ -20,6 +20,7 @@ public class CarController : MonoBehaviour
 
         MaintainBufferZone();
     }
+
 
     void MaintainBufferZone()
     {
