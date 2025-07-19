@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private float velocityX;
     private float velocityY;
     private float velocityZ;
+    public Camera CarCam;
     [Header("Player Parameters")]
     /// <summary>
     /// Magnitude of force applied to player while moving laterally.
@@ -47,8 +48,10 @@ public class PlayerController : MonoBehaviour
     /// of playing sound effects.
     /// </summary>
     private bool airborne;
+    private bool isNearCar;
     [Header("References")]
     public LoseHandler loseScript;
+    public GameObject playerCar; 
     [Header("Debug")]
     /// <summary>
     /// Show the physics raycast used to test if player is grounded?
@@ -67,6 +70,12 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("Player object could not find a lose game script.");
         }
+
+        if (playerCar != null)
+        {
+            playerCar.GetComponent<CarController>().enabled = false; // Disable car control at start
+        }
+        isNearCar = false;
         // Allow death SFX to play even when game is paused
         deathPlayer.ignoreListenerPause = true;
     }
@@ -105,6 +114,11 @@ public class PlayerController : MonoBehaviour
             Debug.DrawRay(transform.position, transform.forward * 10, Color.red);
         }
 
+        if(isNearCar && Input.GetKeyDown(KeyCode.E))
+        {
+            EnterCar();
+        }
+
         if (airborne && rb.linearVelocity.y == 0)
         {
             // Play the landing sound effect on the first frame the player is no longer airborne
@@ -115,6 +129,11 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("PlayerCar"))
+        {
+            Debug.Log("Player is near car");
+            isNearCar = true;
+        }
         if (other.CompareTag("Respawn"))
         {
             deathPlayer.Play();
@@ -122,6 +141,31 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("PlayerCar"))
+        {
+            isNearCar = false;
+        }
+    }
+
+    void EnterCar()
+    {
+        transform.rotation = playerCar.transform.rotation; 
+        transform.position = playerCar.transform.position + Vector3.up * 1.5f; // Adjust height as needed
+        transform.SetParent(playerCar.transform);
+        foreach (var renderer in GetComponentsInChildren<Renderer>())
+        {
+            renderer.enabled = false;
+        }
+        // Disable player movement
+        rb.isKinematic = true;
+        this.enabled = false; 
+        playerCar.GetComponent<CarController>().enabled = true;
+        SwitchCameraToCar();
+        Camera.main.enabled = false;
+        CarCam.enabled = true;
+    }
     bool IsGrounded()
     {
         // Allow the jump if the player is grounded (i.e., is in contact with the floor)
@@ -136,6 +180,11 @@ public class PlayerController : MonoBehaviour
         {
             return false;
         }
+    }
+
+    void SwitchCameraToCar()
+    {
+        Camera.main.GetComponent<CameraFollow>().target = playerCar.transform;
     }
 
     Vector3 CheckJump()

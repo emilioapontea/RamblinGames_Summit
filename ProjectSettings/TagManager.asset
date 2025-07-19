@@ -8,14 +8,16 @@ TagManager:
   - ice_cube
   - Ground
   - water
+  - PlayerCar
+  - trackBarriers
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Car
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 
