@@ -74,7 +74,7 @@ public class RootMotionControl : MonoBehaviour
         if (jumpPressed && isGrounded)
         {
             rbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            anim.SetTrigger("jump");  // 🟢 Only works if Animator has this trigger
+            anim.SetTrigger("jump");  
             jumpPressed = false;
         }
     }
