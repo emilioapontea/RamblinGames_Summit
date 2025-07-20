@@ -64,13 +64,15 @@ public class RootMotionControl : MonoBehaviour
             // }
         }
 
-        Debug.Log($"Charges: {walljumpCharges}");
+        // Debug.Log($"Charges: {walljumpCharges}");
 
         // if (airborne && rbody.linearVelocity.y == 0)
         if (IsGrounded)
         {
             airborne = false;
             walljumpCharges = maxWalljumps;
+            // TODO: fix landing and jumping animations
+            // anim.SetTrigger("land");
         }
 
         // Optional: runtime speed tweak
@@ -167,7 +169,8 @@ public class RootMotionControl : MonoBehaviour
             }
 
             walljumpTimer = walljumpDelay;
-            anim.SetTrigger("jump");
+            // TODO: fix landing and jumping animations
+            // anim.SetTrigger("airborne");
             return new Vector3(0, jumpForce, 0);
         }
         else if (CanWallJump)
@@ -180,7 +183,8 @@ public class RootMotionControl : MonoBehaviour
 
             Vector3 wallJumpVector = 1 * walljumpKickbackForce * wallJumpContactPoint.normal;
             Vector3 jumpVector = new Vector3(wallJumpVector.x, jumpForce * walljumpVerticalMultiplier, wallJumpVector.z);
-            anim.SetTrigger("jump");
+            // TODO: fix landing and jumping animations
+            // anim.SetTrigger("airborne");
             return jumpVector;
         }
         return Vector3.zero;
