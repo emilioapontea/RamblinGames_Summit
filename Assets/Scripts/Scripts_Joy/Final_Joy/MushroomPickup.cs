@@ -56,10 +56,20 @@ public class MushroomPickup : MonoBehaviour
 {
     public enum MushroomType { Power, Lava, Ice }
     public MushroomType mushroomType;
+    /// <summary>
+    /// How fast should the mushrooms rotate about the y-axis.
+    /// </summary>
+    public float rotationSpeed = 0f;
 
     public AudioClip powerClip;
     public AudioClip lavaClip;
     public AudioClip iceClip;
+
+    void FixedUpdate()
+    {
+        // Continuously rotate mushrooms about the y-axis
+        transform.Rotate(rotationSpeed * Time.deltaTime * Vector3.forward);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
