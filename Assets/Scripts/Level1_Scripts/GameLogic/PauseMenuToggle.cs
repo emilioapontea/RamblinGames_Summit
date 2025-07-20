@@ -69,7 +69,7 @@ public class PauseMenuToggle : MonoBehaviour
                 canvasGroup.alpha = 0f;
 
                 // Unpause the music (if previously paused)
-                if (stopMusicOnPause && allowUnpause) BackgroundAudioManager.Instance.Play();
+                if (stopMusicOnPause && allowUnpause && BackgroundAudioManager.Instance != null) BackgroundAudioManager.Instance.Play();
 
                 // Play the unpause sound effect (if enabled)
                 if (playPauseSoundEffects) unpauseSoundEffect.Play();
@@ -85,7 +85,7 @@ public class PauseMenuToggle : MonoBehaviour
                 canvasGroup.alpha = 1f;
 
                 // Pause the music
-                if (stopMusicOnPause) BackgroundAudioManager.Instance.Pause();
+                if (stopMusicOnPause && BackgroundAudioManager.Instance != null) BackgroundAudioManager.Instance.Pause();
 
                 // Play the pause sound effect (if enabled)
                 if (playPauseSoundEffects) pauseSoundEffect.Play();
