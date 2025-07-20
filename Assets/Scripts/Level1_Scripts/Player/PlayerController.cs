@@ -71,26 +71,13 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public AudioSource jumpPlayer;
     /// <summary>
-    /// The Audio Source that plays the landing sound effect.
-    /// </summary>
-    public AudioSource landPlayer;
-    /// <summary>
     /// The audio source that plays the player death sound effect.
     /// </summary>
     public AudioSource deathPlayer;
     /// <summary>
-    /// Used to check when the player transitions from grounded to jumping,
-    /// and from airborne to grounded. This field is only used for the purposes
-    /// of playing sound effects.
+    /// Reference to PlayerAnimation script.
     /// </summary>
-    private Animator anim;
-    /// <summary>
-    /// Max speed of playern run animation. Animation speed is set to 1 when player is motionless,
-    /// and is linearlly interpolated to this value as the player gains speed so that the running
-    /// animation speeds up as the player gains speed.
-    /// </summary>
-    [Header("Player Animation")]
-    public float maxAnimationSpeed = 3f;
+    private PlayerAnimation playerAnimationScript;
     private int groundContactCount = 0;
     private bool Grounded => groundContactCount > 0;
     private bool airborne;
@@ -114,10 +101,10 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         walljumpCharges = maxWalljumps;
         walljumpTimer = walljumpDelay;
-        anim = GetComponentInChildren<Animator>();
+        playerAnimationScript = GetComponentInChildren<PlayerAnimation>();
+        if (playerAnimationScript == null) Debug.LogError("PlayerController: Player object could not find a PlayerAnimation script in a child object.");
         if (loseScript == null) Debug.LogError("PlayerController: Player object could not find a lose game script.");
         if (playerModel == null) Debug.LogError("PlayerController: Player object could not find a reference to a visible model.");
-        if (anim == null) Debug.LogError("PlayerController: Player object could not find animator component in children.");
         // Allow death SFX to play even when game is paused
         deathPlayer.ignoreListenerPause = true;
     }
@@ -143,8 +130,7 @@ public class PlayerController : MonoBehaviour
         }
 
         float animationVelocity = Mathf.Lerp(0f, 1f, rb.linearVelocity.magnitude / 10);
-        anim.SetFloat("velocity", Mathf.Lerp(0f, 1f, animationVelocity));
-        anim.SetFloat("animSpeed", Mathf.Lerp(1f, maxAnimationSpeed, animationVelocity));
+        playerAnimationScript.Run(animationVelocity);
 
         Vector3 jump = CheckJump();
         rb.AddForce(jump, ForceMode.Impulse);
@@ -175,10 +161,7 @@ public class PlayerController : MonoBehaviour
 
         if (airborne && rb.linearVelocity.y == 0)
         {
-            // Play the landing sound effect on the first frame the player is no longer airborne
             airborne = false;
-            anim.SetTrigger("land");
-            if (playSoundEffects) landPlayer.Play();
             walljumpCharges = maxWalljumps; // Reset walljump charges
         }
     }
@@ -189,6 +172,38 @@ public class PlayerController : MonoBehaviour
         {
             deathPlayer.Play();
             Death();
+        }
+
+        if (other.CompareTag("Lava"))
+        {
+            if (!GameStateManager.Instance.hasLavaMushroom)
+            {
+                Debug.Log("Died in Lava!");
+                Time.timeScale = 0f;
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxDeath);
+                Death();
+            }
+            else
+            {
+                Debug.Log("Safe in Lava (Lava Mushroom collected)");
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxLava);
+            }
+        }
+
+        if (other.CompareTag("Water"))
+        {
+            if (!GameStateManager.Instance.hasIceMushroom)
+            {
+                Debug.Log("Died in Ice!");
+                Time.timeScale = 0f;
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxDeath);
+                Death();
+            }
+            else
+            {
+                Debug.Log("Safe in Ice (Ice Mushroom collected)");
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxIce);
+            }
         }
     }
 
@@ -222,7 +237,6 @@ public class PlayerController : MonoBehaviour
                 // Play the jumping sound effect once upon jumping
                 // Airborne should only be reset to false upon landing
                 airborne = true;
-                anim.SetTrigger("airborne");
                 if (playSoundEffects) jumpPlayer.Play();
             }
             walljumpTimer = walljumpDelay;
@@ -308,5 +322,10 @@ public class PlayerController : MonoBehaviour
         {
             walljumpWallContactCount--;
         }
+    }
+
+    public bool GetGrounded()
+    {
+        return Grounded;
     }
 }
