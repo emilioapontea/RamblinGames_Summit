@@ -7,6 +7,7 @@ public class PlayerSoundManager : MonoBehaviour
     public AudioSource jumpPlayer;
     public AudioSource landPlayer;
     public AudioSource deathPlayer;
+    public AudioSource wallSlidePlayer;
 
     private RootMotionControl rootMotionControl;
     private bool wasGrounded = true;
@@ -25,6 +26,15 @@ public class PlayerSoundManager : MonoBehaviour
             if (rootMotionControl.IsGrounded && !wasGrounded && landPlayer != null) landPlayer.Play();
 
             if (!rootMotionControl.IsGrounded && wasGrounded && jumpPlayer != null) jumpPlayer.Play();
+
+            if (!rootMotionControl.IsGrounded && rootMotionControl.CanWallJump && wallSlidePlayer != null && !wallSlidePlayer.isPlaying)
+            {
+                wallSlidePlayer.Play();
+            }
+            else if ((rootMotionControl.IsGrounded || !rootMotionControl.CanWallJump) && wallSlidePlayer != null && wallSlidePlayer.isPlaying)
+            {
+                wallSlidePlayer.Stop();
+            }
         }
 
         wasGrounded = rootMotionControl.IsGrounded;
