@@ -23,9 +23,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level_Joy.unity
     guid: 078368521bbb9604da542f2b985502d7
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/End.unity
     guid: e1b0014f37ab84a9985fd7535c38d319
+  - enabled: 1
+    path: Assets/Scenes/Win.unity
+    guid: 3985ba4ef1324454eb5aaf0a541f19f1
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
