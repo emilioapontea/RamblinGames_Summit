@@ -38,6 +38,7 @@ public class ThirdPersonCamera : MonoBehaviour
             RaycastHit hit;
             if (!forceVisibleTarget || !CheckTargetBlocked(out hit))
             {
+                Debug.Log("Camera not blocked by collider, moving camera to desired pose");
                 transform.position = Vector3.SmoothDamp(transform.position, desiredPose.position, ref currentPositionCorrectionVelocity, positionSmoothTime, positionMaxSpeed, Time.deltaTime);
                 var targForward = desiredPose.forward;
                 transform.rotation = QuaternionUtil.SmoothDamp(transform.rotation,
@@ -45,6 +46,7 @@ public class ThirdPersonCamera : MonoBehaviour
             }
             else
             {
+                Debug.Log("Camera blocked by collider, moving camera to collider position instead of desired pose");
                 // If camera blocked by collider, move camera to collider position instead of desired pose
                 transform.position = Vector3.SmoothDamp(transform.position, hit.point, ref currentPositionCorrectionVelocity, positionSmoothTime, positionMaxSpeed, Time.deltaTime);
                 var targForward = desiredPose.forward;
