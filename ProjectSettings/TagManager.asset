@@ -9,6 +9,8 @@ TagManager:
   - Ground
   - water
   - WalljumpWall
+  - Lava
+  - Water
   layers:
   - Default
   - TransparentFX
