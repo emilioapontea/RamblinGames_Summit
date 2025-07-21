@@ -8,10 +8,22 @@
 * Use W,A,S, and D keys to move Luna through the different rooms.
 * Each room has a different objective.
 * Dodge enemies, collect items, solve puzzles to move on
+* Bowser and Lakitu will talk to Luna to provide information
+* Signs are posted throughout with hints
+* If you ever lose all your hearts or die, you will restart the room.
+* You can always use the pause menu to restart a room.
 
 ### Level1
 Level 1 is an intro, just use the keys to move the character.
 Trigger the drawbridge to get inside the tower and move on to the next level.
+If you fall in the moat, you die.
+
+### Maze (Dungeon)
+Bowser tells you he has been here before. This room is a dungeon with ghost enemies.
+The ghosts patrol the halls, and if they touch you you lose a heart.
+If you fall in lava, you die. Bowser left a sign in the dungeon explaining how to use fireballs.
+You can shoot fire to kill the ghosts.
+If you reach the end, the gate opens and you move on to the next room.
 
 ### LevelX (Garden)
 Player has to collect all the gems whilst dodging the enemy and
@@ -28,13 +40,8 @@ the player (exclamation mark bubble appears) when the player gets
 close (shown in the video).
 Added audio for gem collection and enemy obstacles that will
 decrease health on the health bar.
-Player has partial root motion and animation via an animator and
-animation clips.
-Currently implemented forward motion and jumping but will fine-tune
-the blending of this root motion by the final submission.
-UI on screen whilst playing shows a health bar (hearts) to the top
-right of the screen and a goal: Number of gems collected to the top
-left of the screen
+1 garden guard will accept gems as payment to open the door to the next room.
+If you fall in the water, you die.
 
 ### IcePuzzleLevel
 Move the character around to solve 4 separate ice block puzzles.
