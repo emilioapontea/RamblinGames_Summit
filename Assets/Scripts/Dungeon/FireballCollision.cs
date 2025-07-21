@@ -7,8 +7,8 @@ public class FireballCollision : MonoBehaviour
     {
         if (other.CompareTag("Ghost"))
         {
-            other.gameObject.SetActive(false);
-            //Destroy(other.gameObject);
+            // other.gameObject.SetActive(false);
+            Destroy(other.gameObject);
             // AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxGhostHit);
         }
     }

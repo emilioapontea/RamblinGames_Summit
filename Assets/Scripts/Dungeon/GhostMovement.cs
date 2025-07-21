@@ -2,148 +2,195 @@ using UnityEngine;
 
 public class GhostMovement : MonoBehaviour
 {
-    public float speed = 2f;
-    public float changeDirection = 1.5f;
+    public float speed = 3f;
+    public float changeDirection = 1f;
     public Transform area;
-    public float edgeBuffer = 1f;
+    public float edgeBuffer = 0.3f;
 
-    private Vector3 direction;
-    private float timer;
+    private Vector3 dir;
+    private float t;
     private Rigidbody rb;
-    private Vector3 minBounds;
-    private Vector3 maxBounds;
-    private Animator anim;
-    private Vector3 lastPosition;
-    private float stuckTimer = 0f;
-    public float stuckCheckInterval = 0.5f;
-    public float stuckDistanceThreshold = 0.1f;
+    private Vector3 minB;
+    private Vector3 maxB;
+
+    // Stuck prevention
+    private Vector3 lastPos;
+    private float stuckT = 0f;
+    public float stuckInterval = 0.5f;
+    public float stuckDist = 0.1f;
+
+    // Direction history to prevent spinning
+    private const int histLen = 5;
+    private Vector3[] dirHist = new Vector3[histLen];
+    private int histIdx = 0;
+
+    // Spin check
+    private int spinCount = 0;
+    private const int spinMax = 6;
+    private Vector3 lastDir;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        anim = GetComponentInChildren<Animator>();
-        lastPosition = rb.position;
-        rb.constraints |= RigidbodyConstraints.FreezePositionY;
-        PickRandomDirection();
+        lastPos = rb.position;
+        PickNewDir();
+        lastDir = dir;
+
         if (area != null)
         {
-            Vector3 areaCenter = area.position;
-            Vector3 halfSize = area.localScale * 0.5f;
-            minBounds = areaCenter - halfSize;
-            maxBounds = areaCenter + halfSize;
+            Vector3 c = area.position;
+            Vector3 h = area.localScale * 0.5f;
+            minB = c - h;
+            maxB = c + h;
         }
     }
 
     void FixedUpdate()
     {
-        // Clamp the skeleton's position to keep it strictly inside the bounding area (zero tolerance)
-        if (area != null)
-        {
-            Vector3 clampedPosition = rb.position;
-            clampedPosition.x = Mathf.Clamp(clampedPosition.x, minBounds.x, maxBounds.x);
-            clampedPosition.y = rb.position.y; // Don't clamp Y, allow natural gravity/jumping
-            clampedPosition.z = Mathf.Clamp(clampedPosition.z, minBounds.z, maxBounds.z);
-            rb.position = clampedPosition;
-        }
+        Vector3 next = rb.position + dir * speed * Time.fixedDeltaTime;
 
-        Vector3 nextPosition = rb.position + direction * speed * Time.fixedDeltaTime;
         if (area != null)
         {
-            stuckTimer += Time.fixedDeltaTime;
-            if (stuckTimer >= stuckCheckInterval)
+            stuckT += Time.fixedDeltaTime;
+            if (stuckT >= stuckInterval)
             {
-                float distanceMoved = Vector3.Distance(rb.position, lastPosition);
-                if (distanceMoved < stuckDistanceThreshold)
+                float d = Vector3.Distance(rb.position, lastPos);
+                if (d < stuckDist)
                 {
-                    PickEscapeDirection();
-                    timer = 0f;
+                    PickEscapeDir();
+                    t = 0f;
                 }
-                lastPosition = rb.position;
-                stuckTimer = 0f;
+                lastPos = rb.position;
+                stuckT = 0f;
             }
-            bool nearEdge = false;
-            if (nextPosition.x < minBounds.x + edgeBuffer || nextPosition.x > maxBounds.x - edgeBuffer)
-                nearEdge = true;
-            if (nextPosition.z < minBounds.z + edgeBuffer || nextPosition.z > maxBounds.z - edgeBuffer)
-                nearEdge = true;
-            if (nearEdge)
+
+            bool near = false;
+            if (next.x < minB.x + edgeBuffer || next.x > maxB.x - edgeBuffer)
+                near = true;
+            if (next.z < minB.z + edgeBuffer || next.z > maxB.z - edgeBuffer)
+                near = true;
+            if (near)
             {
-                PickRandomDirection();
-                timer = 0f;
+                TryPickNewDir();
+                t = 0f;
             }
         }
 
-        // Animation
-        if (anim != null)
+        rb.linearVelocity = dir * speed;
+
+        t += Time.fixedDeltaTime;
+        if (t >= changeDirection)
         {
-            float currentSpeed = rb.linearVelocity.magnitude;
-            anim.SetFloat("Speed", currentSpeed);
+            TryPickNewDir();
+            t = 0f;
         }
 
-        rb.linearVelocity = direction * speed;
-
-        timer += Time.fixedDeltaTime;
-        if (timer >= changeDirection)
+        if (dir.sqrMagnitude > 0.01f)
         {
-            PickRandomDirection();
-            timer = 0f;
-        }
-
-        if (direction.sqrMagnitude > 0.01f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-            rb.MoveRotation(targetRotation);
+            Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);
+            rb.MoveRotation(rot);
         }
     }
 
-    void PickEscapeDirection()
+    void TryPickNewDir()
+    {
+        if (spinCount >= spinMax)
+        {
+            ForceFarDir();
+            spinCount = 0;
+        }
+        else
+        {
+            PickNewDir();
+            if (Vector3.Dot(dir, lastDir) < 0.5f)
+                spinCount = 0;
+            else
+                spinCount++;
+            lastDir = dir;
+        }
+    }
+
+    void ForceFarDir()
     {
         if (area != null)
         {
-            Vector3 areaCenter = area.position;
-            Vector3 escapeDir = (areaCenter - rb.position).normalized;
-            escapeDir.y = 0;
-            if (escapeDir.sqrMagnitude < 0.01f)
+            Vector3 c = area.position;
+            Vector3 away = (rb.position - c).normalized;
+            away.y = 0;
+            if (away.sqrMagnitude < 0.01f)
+                away = new Vector3(Random.value, 0, Random.value).normalized;
+            SetDir(away);
+        }
+        else
+        {
+            PickRandDirHist();
+        }
+    }
+
+    void PickEscapeDir()
+    {
+        if (area != null)
+        {
+            Vector3 c = area.position;
+            Vector3 esc = (c - rb.position).normalized;
+            esc.y = 0;
+            if (esc.sqrMagnitude < 0.01f)
             {
-                PickRandomDirection();
+                PickRandDirHist();
             }
             else
             {
-                direction = escapeDir;
+                SetDir(esc);
             }
         }
         else
         {
-            PickRandomDirection();
+            PickRandDirHist();
         }
     }
 
-    void PickRandomDirection()
+    void PickRandDirHist()
     {
         Vector3 newDir;
         int tries = 0;
+        bool ok = false;
         do
         {
-            float angle = Random.Range(0f, 360f);
-            newDir = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), 0, Mathf.Sin(angle * Mathf.Deg2Rad)).normalized;
+            float a = Random.Range(0f, 360f);
+            newDir = new Vector3(Mathf.Cos(a * Mathf.Deg2Rad), 0, Mathf.Sin(a * Mathf.Deg2Rad)).normalized;
+            ok = true;
+            for (int i = 0; i < dirHist.Length; i++)
+            {
+                if (dirHist[i] != Vector3.zero && Vector3.Dot(newDir, dirHist[i]) > 0.85f)
+                {
+                    ok = false;
+                    break;
+                }
+            }
             tries++;
-        } while (Vector3.Dot(newDir, direction) > 0.85f && tries < 10);
-        direction = newDir;
+        } while (!ok && tries < 20);
+
+        SetDir(newDir);
     }
 
-
-
-    void OnCollisionEnter(Collision collision)
+    void PickNewDir()
     {
-        if (collision.gameObject.CompareTag("wall"))
+        PickRandDirHist();
+    }
+
+    void SetDir(Vector3 d)
+    {
+        dir = d;
+        dirHist[histIdx] = d;
+        histIdx = (histIdx + 1) % histLen;
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.CompareTag("wall"))
         {
-            PickRandomDirection();
-            timer = 0f;
-        }
-        if (collision.gameObject.CompareTag("Fireball"))
-        {
-            Destroy(gameObject);
-            Destroy(collision.gameObject);
+            TryPickNewDir();
+            t = 0f;
         }
     }
 }
