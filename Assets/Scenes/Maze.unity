@@ -22726,6 +22726,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.0000005, y: 1.1946533, z: 0.28585264}
   m_Center: {x: 1.0000002, y: 0.59732664, z: 0.0000005364417}
+--- !u!1 &1352601011 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6861470469551684759, guid: 2e0bd6085a405224e9d532bc1aa83829, type: 3}
+  m_PrefabInstance: {fileID: 5478446296816787826}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1360096621
 GameObject:
   m_ObjectHideFlags: 0
@@ -37248,22 +37253,20 @@ PrefabInstance:
       addedObject: {fileID: 7973767754994082071}
     - targetCorrespondingSourceObject: {fileID: 3813576067587045727, guid: 2e0bd6085a405224e9d532bc1aa83829, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7973767754994082072}
-    - targetCorrespondingSourceObject: {fileID: 3813576067587045727, guid: 2e0bd6085a405224e9d532bc1aa83829, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 7973767754994082074}
     - targetCorrespondingSourceObject: {fileID: 3813576067587045727, guid: 2e0bd6085a405224e9d532bc1aa83829, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7973767754994082073}
+    - targetCorrespondingSourceObject: {fileID: 3813576067587045727, guid: 2e0bd6085a405224e9d532bc1aa83829, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7973767754994082076}
+    - targetCorrespondingSourceObject: {fileID: 3813576067587045727, guid: 2e0bd6085a405224e9d532bc1aa83829, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7973767754994082075}
   m_SourcePrefab: {fileID: 100100000, guid: 2e0bd6085a405224e9d532bc1aa83829, type: 3}
 --- !u!82 &5478446296816787827 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 1038553640184921104, guid: 2e0bd6085a405224e9d532bc1aa83829, type: 3}
-  m_PrefabInstance: {fileID: 5478446296816787826}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &5478446296816787828 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 4837146323459000882, guid: 2e0bd6085a405224e9d532bc1aa83829, type: 3}
   m_PrefabInstance: {fileID: 5478446296816787826}
   m_PrefabAsset: {fileID: 0}
 --- !u!82 &5478446296816787829 stripped
@@ -37489,7 +37492,7 @@ Animator:
   m_GameObject: {fileID: 6154915955380819977}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dde3eaf17cdaf4dc3bbf24a95158fabf, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -37515,39 +37518,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 8
   respawnPosition: {x: 0, y: 0, z: 0}
---- !u!114 &7973767754994082072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6154915955380819977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14b216b7984e2c241b315df0f7ec68ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireballPrefab: {fileID: 6020108901485528062, guid: eeed6605c6451944185ae08202498021, type: 3}
-  firePoint: {fileID: 1434031078}
-  fireballSpeed: 1
-  playerModel: {fileID: 6154915955380819977}
-  playerModelTurnSpeed: 10
-  movementSpeed: 2
-  jumpPower: 1
-  cameraTurningSpeed: 2
-  decelerationForce: 2
-  maxWalljumps: 3
-  walljumpKickbackForce: 2
-  walljumpVerticalMultiplier: 2
-  walljumpDelay: 1
-  playSoundEffects: 1
-  jumpPlayer: {fileID: 5478446296816787829}
-  landPlayer: {fileID: 5478446296816787828}
-  deathPlayer: {fileID: 5478446296816787827}
-  maxAnimationSpeed: 3
-  loseScript: {fileID: 1333202138}
-  showGroundedRaycast: 0
-  showDirectionRaycast: 0
 --- !u!114 &7973767754994082073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37581,6 +37551,49 @@ MonoBehaviour:
   forwardInputFilter: 5
   turnInputFilter: 5
   forwardSpeedLimit: 1
+--- !u!114 &7973767754994082075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6154915955380819977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14b216b7984e2c241b315df0f7ec68ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireballPrefab: {fileID: 6020108901485528062, guid: eeed6605c6451944185ae08202498021, type: 3}
+  firePoint: {fileID: 1434031078}
+  fireballSpeed: 700
+--- !u!114 &7973767754994082076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6154915955380819977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c33fe48912d6664fa127dc74c991d51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerModel: {fileID: 1352601011}
+  playerModelTurnSpeed: 10
+  movementSpeed: 2
+  jumpPower: 10
+  cameraTurningSpeed: 2
+  decelerationForce: 2
+  maxWalljumps: 3
+  walljumpKickbackForce: 2
+  walljumpVerticalMultiplier: 2
+  walljumpDelay: 1
+  playSoundEffects: 1
+  jumpPlayer: {fileID: 5478446296816787829}
+  deathPlayer: {fileID: 5478446296816787827}
+  loseScript: {fileID: 1333202138}
+  showGroundedRaycast: 0
+  showDirectionRaycast: 0
 --- !u!4 &8649626508985514501 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3977435146667649237, guid: 2e0bd6085a405224e9d532bc1aa83829, type: 3}
