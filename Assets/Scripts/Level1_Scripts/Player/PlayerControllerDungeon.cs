@@ -6,6 +6,7 @@ using System.Numerics;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
 using Unity.Mathematics;
+using System.Collections;
 
 public class PlayerControllerDungeon : MonoBehaviour
 {
@@ -13,13 +14,21 @@ public class PlayerControllerDungeon : MonoBehaviour
     public GameObject fireballPrefab;
     public Transform firePoint;
     public float fireballSpeed = 700f;
+    public float fireballTimeout = 0.5f;
+    private float fireballTimer = 0f;
+    private bool enableAttack = false;
 
-    void Update()
+    void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.F))
-        {   
-            Debug.Log("f pressed, initiating attack.");
+        if (Input.GetKey(KeyCode.Return) && fireballTimer <= 0f && enableAttack)
+        {
+            // Debug.Log("f pressed, initiating attack.");
             Attack();
+            fireballTimer = fireballTimeout;
+        }
+        else if (fireballTimer > 0f)
+        {
+            fireballTimer -= Time.fixedDeltaTime;
         }
     }
 
@@ -29,13 +38,25 @@ public class PlayerControllerDungeon : MonoBehaviour
         // Quaternion spawnRot = firePoint != null ? firePoint.rotation : transform.rotation;
 
         GameObject fireball = Instantiate(fireballPrefab, firePoint.position, transform.rotation);
-        Rigidbody fireballRb = fireball.GetComponent<Rigidbody>();
+        Rigidbody rb = fireball.GetComponent<Rigidbody>();
         if (rb != null)
         {
             Vector3 inheritedVelocity = rb != null ? rb.linearVelocity : Vector3.zero;
 
             Vector3 fireballVelocity = inheritedVelocity + transform.forward * fireballSpeed;
-            fireballRb.linearVelocity = fireballVelocity;
+            rb.linearVelocity = fireballVelocity;
         }
+        StartCoroutine(DelayDestroy(fireball, 1f));
+    }
+
+    private IEnumerator DelayDestroy(GameObject obj, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy(obj);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("FireballDoorTrigger")) enableAttack = true;
     }
 }

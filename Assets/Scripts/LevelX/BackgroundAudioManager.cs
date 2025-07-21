@@ -18,7 +18,7 @@ public class BackgroundAudioManager : MonoBehaviour
             audioSource.clip = backgroundMusic;
             audioSource.loop = true;
             audioSource.playOnAwake = false;
-            audioSource.Play();
+            Play();
         }
         else
         {

@@ -15,6 +15,7 @@ TagManager:
   - wall
   - Stair
   - Fireball
+  - FireballDoorTrigger
   layers:
   - Default
   - TransparentFX

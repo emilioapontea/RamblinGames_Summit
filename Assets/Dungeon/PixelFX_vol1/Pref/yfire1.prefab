@@ -155,7 +155,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -170,6 +170,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6020108901485528062}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cc0aa78392ae3541932cb17e0ab1402, type: 3}
+  m_Script: {fileID: 11500000, guid: 89c96f693c50c594ca25138d121bc446, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -311,7 +311,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.CompareTag("Ground"))
+        if (collision.transform.CompareTag("Ground") || collision.transform.CompareTag("Stair"))
         {
             groundContactCount++;
         }
@@ -325,7 +325,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionExit(Collision collision)
     {
-        if (collision.transform.CompareTag("Ground"))
+        if (collision.transform.CompareTag("Ground") || collision.transform.CompareTag("Stair"))
         {
             groundContactCount--;
         }
