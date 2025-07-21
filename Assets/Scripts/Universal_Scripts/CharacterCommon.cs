@@ -33,7 +33,7 @@ public class CharacterCommon {
         foreach(RaycastHit hit in hits)
         {
 
-            if (hit.collider.gameObject.CompareTag("ground"))
+            if (hit.collider.gameObject.CompareTag("ground") || hit.collider.gameObject.CompareTag("Stair"))
             {           
 
                 ret = true;

@@ -88,6 +88,7 @@ public class RootMotionControl : MonoBehaviour
         // }
 
         anim.speed = animationSpeed;
+        transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
     }
 
     void FixedUpdate()
@@ -112,6 +113,7 @@ public class RootMotionControl : MonoBehaviour
         rbody.AddForce(jump, ForceMode.Impulse);
 
         walljumpTimer -= Time.deltaTime;
+        // transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
     }
 
     void OnAnimatorMove()
@@ -125,6 +127,7 @@ public class RootMotionControl : MonoBehaviour
 
         rbody.MovePosition(move);
         rbody.MoveRotation(anim.rootRotation);
+        transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
     }
 
     void OnCollisionEnter(Collision collision)

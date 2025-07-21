@@ -111,7 +111,13 @@ public class BasicControlScript : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
 
-        if (collision.transform.gameObject.tag == "ground")
+        if (collision.transform.gameObject.tag == "ground" || collision.transform.gameObject.tag == "Stair")
+        {
+            //Debug.Log("Grounded");
+            ++groundContactCount;
+
+            // EventManager.TriggerEvent<PlayerLandsEvent, Vector3, float>(collision.contacts[0].point, collision.impulse.magnitude);
+        }
         {
             ++groundContactCount;
 
@@ -122,7 +128,7 @@ public class BasicControlScript : MonoBehaviour
 
     void OnCollisionExit(Collision collision)
     {
-        if (collision.transform.gameObject.tag == "ground")
+        if (collision.transform.gameObject.tag == "ground" || collision.transform.gameObject.tag == "Stair")
         {
             --groundContactCount;
 
