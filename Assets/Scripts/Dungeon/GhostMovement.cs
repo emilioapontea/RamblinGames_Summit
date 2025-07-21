@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class GhostMovement : MonoBehaviour
 {
-    public float speed = 3f;
+    public float speed = 2f;
     public float changeDirection = 1.5f;
     public Transform area;
-    public float edgeBuffer = 0.8f;
+    public float edgeBuffer = 1f;
 
     private Vector3 direction;
     private float timer;
@@ -24,7 +24,7 @@ public class GhostMovement : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         lastPosition = rb.position;
         rb.constraints |= RigidbodyConstraints.FreezePositionY;
-        PickNewDirection();
+        PickRandomDirection();
         if (area != null)
         {
             Vector3 areaCenter = area.position;
@@ -68,7 +68,7 @@ public class GhostMovement : MonoBehaviour
                 nearEdge = true;
             if (nearEdge)
             {
-                PickNewDirection();
+                PickRandomDirection();
                 timer = 0f;
             }
         }
@@ -85,7 +85,7 @@ public class GhostMovement : MonoBehaviour
         timer += Time.fixedDeltaTime;
         if (timer >= changeDirection)
         {
-            PickNewDirection();
+            PickRandomDirection();
             timer = 0f;
         }
 
@@ -131,16 +131,13 @@ public class GhostMovement : MonoBehaviour
         direction = newDir;
     }
 
-    void PickNewDirection()
-    {
-        PickRandomDirection();
-    }
+
 
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("wall"))
         {
-            PickNewDirection();
+            PickRandomDirection();
             timer = 0f;
         }
         if (collision.gameObject.CompareTag("Fireball"))
