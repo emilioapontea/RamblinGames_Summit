@@ -72,9 +72,7 @@ MonoBehaviour:
     Pause: ESCAPE
 
     Dismiss/Interact:
-    ENTER
-
-    Turn Camera: O/P'
+    ENTER'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1bd33f53710c145898028526c08cd81f, type: 2}
   m_sharedMaterial: {fileID: 3864694635995302285, guid: 1bd33f53710c145898028526c08cd81f, type: 2}
