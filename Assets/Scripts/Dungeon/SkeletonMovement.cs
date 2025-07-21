@@ -23,8 +23,7 @@ public class SkeletonMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         lastPosition = rb.position;
-        rb.constraints |= RigidbodyConstraints.FreezePositionY;
-        PickRandomDirection();
+        PickNewDirection();
         if (area != null)
         {
             Vector3 areaCenter = area.position;
@@ -68,7 +67,7 @@ public class SkeletonMovement : MonoBehaviour
                 nearEdge = true;
             if (nearEdge)
             {
-                PickRandomDirection();
+                PickNewDirection();
                 timer = 0f;
             }
         }
@@ -85,7 +84,7 @@ public class SkeletonMovement : MonoBehaviour
         timer += Time.fixedDeltaTime;
         if (timer >= changeDirection)
         {
-            PickRandomDirection();
+            PickNewDirection();
             timer = 0f;
         }
 
@@ -131,13 +130,16 @@ public class SkeletonMovement : MonoBehaviour
         direction = newDir;
     }
 
-
+    void PickNewDirection()
+    {
+        PickRandomDirection();
+    }
 
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("wall"))
         {
-            PickRandomDirection();
+            PickNewDirection();
             timer = 0f;
         }
         if (collision.gameObject.CompareTag("Fireball"))
