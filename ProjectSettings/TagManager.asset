@@ -9,11 +9,15 @@ TagManager:
   - Ground
   - water
   - WalljumpWall
+  - Ghost
+  - wall
+  - Stair
+  - Fireball
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Stairs
   - Water
   - UI
   - 

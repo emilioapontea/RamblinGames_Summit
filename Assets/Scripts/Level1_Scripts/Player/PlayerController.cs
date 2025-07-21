@@ -10,6 +10,9 @@ using Unity.Mathematics;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
+    public GameObject fireballPrefab;
+    public Transform firePoint;
+    public float fireballSpeed = 700f;
     /// <summary>
     /// The player's visible character model. This should not be the player's collision.
     /// </summary>
@@ -27,7 +30,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Magnitude of vertical force applied to player upon jumping.
     /// </summary>
-    public float jumpPower = 10.0f;
+    public float jumpPower = 1f;
     /// <summary>
     /// The rate (in degrees) at which the camera will turn on every fixed update 
     /// when a 'Turn Camera' key is pressed.
@@ -150,6 +153,7 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(jump, ForceMode.Impulse);
 
         walljumpTimer -= Time.deltaTime; // Decrement walljump timer
+
     }
 
     void Update()
@@ -173,6 +177,16 @@ public class PlayerController : MonoBehaviour
             Debug.DrawRay(transform.position, transform.forward * 10, Color.red);
         }
 
+        if (Input.GetKey(KeyCode.F))
+        {   
+            Debug.Log("f pressed, initiating attack.");
+            Attack();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            Jump();
+        }
+
         if (airborne && rb.linearVelocity.y == 0)
         {
             // Play the landing sound effect on the first frame the player is no longer airborne
@@ -192,6 +206,33 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void Jump() {
+        if (Grounded)
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpPower, rb.linearVelocity.z);
+            if (playSoundEffects) jumpPlayer.Play();
+            if (anim != null) anim.SetTrigger("airborne");
+            airborne = true;
+        }
+    }
+
+    void Attack()
+    {
+        // Vector3 spawnPos = firePoint != null ? firePoint.position : transform.position + transform.forward * 1.0f;
+        // Quaternion spawnRot = firePoint != null ? firePoint.rotation : transform.rotation;
+
+        GameObject fireball = Instantiate(fireballPrefab, firePoint.position, transform.rotation);
+        Rigidbody fireballRb = fireball.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            Vector3 inheritedVelocity = rb != null ? rb.linearVelocity : Vector3.zero;
+
+            // Add shoot forward velocity
+            Vector3 fireballVelocity = inheritedVelocity + transform.forward * fireballSpeed;
+            fireballRb.linearVelocity = fireballVelocity;
+        }
+    }
+
     // bool IsGrounded()
     // {
     //     // Allow the jump if the player is grounded (i.e., is in contact with the floor)
@@ -207,6 +248,7 @@ public class PlayerController : MonoBehaviour
     //         return false;
     //     }
     // }
+
 
     Vector3 CheckJump()
     {
@@ -285,11 +327,17 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.CompareTag("Ground"))
+        if (collision.transform.CompareTag("Ground") || collision.transform.CompareTag("Stair"))
+        {
+            //Debug.Log("Grounded");
+            groundContactCount++;
+            if (playSoundEffects) anim.SetTrigger("land");
+            // EventManager.TriggerEvent<PlayerLandsEvent, Vector3, float>(collision.contacts[0].point, collision.impulse.magnitude);
+        }
         {
             groundContactCount++;
         }
-        if (collision.transform.CompareTag("WalljumpWall"))
+        if (collision.transform.CompareTag("WalljumpWall") || collision.transform.CompareTag("Wall"))
         {
             walljumpWallContactCount++;
             // Set walljump Contact Point reference to latest point of contact
