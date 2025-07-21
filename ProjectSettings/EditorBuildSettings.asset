@@ -18,13 +18,13 @@ EditorBuildSettings:
     path: Assets/Scenes/Level1.unity
     guid: 1ee1c64694fd25244a409d9b07dac2f3
   - enabled: 1
-    path: Assets/Scenes/LevelX.unity
+    path: Assets/Scenes/GemLevel.unity
     guid: 247d5b38de9d84b68af9df8400a4c79a
   - enabled: 1
     path: Assets/Scenes/IcePuzzleLevel.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Scenes/Level_Joy.unity
+    path: Assets/Scenes/PlatformLevel.unity
     guid: 078368521bbb9604da542f2b985502d7
   - enabled: 0
     path: Assets/Scenes/End.unity
