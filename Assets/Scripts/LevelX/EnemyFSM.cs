@@ -1,4 +1,3 @@
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -73,7 +72,6 @@ public class EnemyFSM : MonoBehaviour
                     // if all gems collected open door.
                     if (!doorsOpenedByGuard && CoinManager.Instance.collectedGems >= CoinManager.Instance.totalGems)
                     {
-                        
                         CoinManager.Instance.OpenDoors();
                         doorsOpenedByGuard = true;
                         currentState = State.DoorOpened;
@@ -105,12 +103,10 @@ public class EnemyFSM : MonoBehaviour
         if (thoughtBubble != null)
             UpdateSpeechBubble(CoinManager.Instance.collectedGems >= CoinManager.Instance.totalGems);
             thoughtBubble.SetActive(true);
-            
-       
     }
 
     void ExitInteractState()
-    {   
+    {
         currentState = State.Patrol;
         agent.SetDestination(patrolPoints[currentPatrolIndex].position);
         if (thoughtBubble != null)
