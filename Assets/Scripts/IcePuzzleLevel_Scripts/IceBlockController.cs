@@ -4,7 +4,7 @@ using UnityEngine;
 public class IceBlockController : MonoBehaviour
 {
     public Vector3 startPosition;          // Initial position of the block
-    public float pushThreshold = 2f;       // How much contact time counts as "push"
+    // public float pushThreshold = 2f;       // How much contact time counts as "push"
     public float slideSpeed = 5f;            // Speed at which block slides
     public LayerMask obstacleMask;           // To detect obstacles
     private Animator anim;              // Animator for the block
@@ -84,7 +84,8 @@ public class IceBlockController : MonoBehaviour
         // Detect push direction based on player contact
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (this.contactTime > this.pushThreshold)
+            // if (this.contactTime > this.pushThreshold)
+            if (Input.GetKeyDown(KeyCode.Return))
             {
                 Vector3 direction = (this.transform.position - collision.transform.position).normalized;
 

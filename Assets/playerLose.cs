@@ -18,6 +18,32 @@ public class playerLose : MonoBehaviour
 
             StartCoroutine(Death());
         }
+
+        if (other.CompareTag("Lava"))
+        {
+            if (!GameStateManager.Instance.hasLavaMushroom)
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxDeath);
+                StartCoroutine(Death());
+            }
+            else
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxLava);
+            }
+        }
+
+        if (other.CompareTag("Water"))
+        {
+            if (!GameStateManager.Instance.hasIceMushroom)
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxDeath);
+                StartCoroutine(Death());
+            }
+            else
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxIce);
+            }
+        }
     }
 
     private IEnumerator Death()

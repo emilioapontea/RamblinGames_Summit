@@ -3298,8 +3298,17 @@ PrefabInstance:
 
 
         These magic ice blocks
-        will only melt if they are placed in a very specific location. Do as you
-        wish with them but try not to melt them all!'
+        will only melt if they are placed in a very specific location. They look
+        heavy, but you can push them if you <b>press ENTER</b>. Do as you wish with
+        them but try not to melt them all!'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5318309873334620002, guid: 45f31e854c803ac4989dbc9abb3b014f, type: 3}
+      propertyPath: m_fontSize
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 5318309873334620002, guid: 45f31e854c803ac4989dbc9abb3b014f, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 34
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
