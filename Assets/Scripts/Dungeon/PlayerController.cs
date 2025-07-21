@@ -83,6 +83,8 @@ public class PlayerController : MonoBehaviour
     private bool airborne;
     private int walljumpWallContactCount = 0;
     private bool CanWalljump => (walljumpWallContactCount > 0 && walljumpCharges > 0 && walljumpTimer <= 0f);
+    private int ghostHitCount = 0;
+    public int ghostLives = 3;
     [Header("References")]
     public LoseHandler loseScript;
     /// <summary>
@@ -187,6 +189,16 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("Safe in Lava (Lava Mushroom collected)");
                 AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxLava);
+            }
+        }
+
+        if (other.CompareTag("ghost"))
+        {
+            ghostHitCount++;
+            if (ghostHitCount >= ghostLives)
+            {
+                deathPlayer.Play();
+                Death();
             }
         }
 

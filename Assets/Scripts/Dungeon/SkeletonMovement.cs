@@ -35,6 +35,16 @@ public class SkeletonMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Clamp the skeleton's position to keep it strictly inside the bounding area (zero tolerance)
+        if (area != null)
+        {
+            Vector3 clampedPosition = rb.position;
+            clampedPosition.x = Mathf.Clamp(clampedPosition.x, minBounds.x, maxBounds.x);
+            clampedPosition.y = rb.position.y; // Don't clamp Y, allow natural gravity/jumping
+            clampedPosition.z = Mathf.Clamp(clampedPosition.z, minBounds.z, maxBounds.z);
+            rb.position = clampedPosition;
+        }
+
         Vector3 nextPosition = rb.position + direction * speed * Time.fixedDeltaTime;
         if (area != null)
         {

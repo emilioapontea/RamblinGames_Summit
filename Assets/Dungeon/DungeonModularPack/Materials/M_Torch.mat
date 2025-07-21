@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1814414943888423330
+--- !u!114 &-8117430103833024462
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Step_A
+  m_Name: M_Torch
   m_Shader: {fileID: -6465566751694194690, guid: 25acb326d5f33cb4ab9975bc23168f2c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -39,15 +39,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 19431d886a4108f49aef1ae0c5e1e992, type: 3}
+        m_Texture: {fileID: 2800000, guid: e5dedf8f44b66e4488bc1fce39ddd08f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 84bd4ba4d2afff84693b6db18f092e6e, type: 3}
+        m_Texture: {fileID: 2800000, guid: fe73c3b16c127b84298c75542c9925a5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Color_Texture:
-        m_Texture: {fileID: 2800000, guid: 19431d886a4108f49aef1ae0c5e1e992, type: 3}
+        m_Texture: {fileID: 2800000, guid: e5dedf8f44b66e4488bc1fce39ddd08f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -71,19 +71,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 19431d886a4108f49aef1ae0c5e1e992, type: 3}
+        m_Texture: {fileID: 2800000, guid: e5dedf8f44b66e4488bc1fce39ddd08f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 3624fe7d072e5964cac60d9219f0bbad, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3dd027b59897aee45928a4eebff95180, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal_Texture:
-        m_Texture: {fileID: 2800000, guid: 84bd4ba4d2afff84693b6db18f092e6e, type: 3}
+        m_Texture: {fileID: 2800000, guid: fe73c3b16c127b84298c75542c9925a5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ORM_Texture:
-        m_Texture: {fileID: 2800000, guid: 9fc6586e504e3f84493d30fb141fc922, type: 3}
+        m_Texture: {fileID: 2800000, guid: b8f773bb1110e5949aef3758500af6a1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -118,7 +118,7 @@ Material:
     - _BUILTIN_Blend: 0
     - _BUILTIN_CullMode: 2
     - _BUILTIN_DstBlend: 0
-    - _BUILTIN_QueueControl: -1
+    - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     - _BUILTIN_SrcBlend: 1
     - _BUILTIN_Surface: 0
@@ -168,7 +168,7 @@ Material:
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &8051361408365536757
+--- !u!114 &5054105143850674481
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
