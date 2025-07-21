@@ -105,6 +105,7 @@ public class StarController : MonoBehaviour
                     gameObject.SetActive(false);
 
                     // FindObjectOfType<MushroomManager>()?.ShowWinPanel();
+                    Debug.Log("Playing next scene now" + nextSceneName);
                     SceneManager.LoadScene(nextSceneName);
                     break;
             }

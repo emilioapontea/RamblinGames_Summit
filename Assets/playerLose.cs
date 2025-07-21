@@ -11,13 +11,19 @@ public class playerLose : MonoBehaviour
     // TODO: implement this in the hearts script instead
     private int ghostHitCount = 0;
     public int ghostLives = 3;
-
+    private bool isInvincible = false;
+    public float invincibilityDuration = 1f;
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ghost"))
         {
+            if (isInvincible) return;
+            isInvincible = true;
+            StartCoroutine(ResetInvincibility());
             ghostHitCount++;
-            Debug.Log("Ghost hit! Current hit count: " + ghostHitCount);
+            //take damage
+            PlayerStats.Instance.TakeDamage(1);
+            //Debug.Log("Ghost hit! Current hit count: " + ghostHitCount);
             if (ghostHitCount >= ghostLives)
             {
                 if (playSoundEffects && deathPlayer != null) deathPlayer.Play();
@@ -26,7 +32,7 @@ public class playerLose : MonoBehaviour
         }
         if (other.CompareTag("Respawn"))
         {
-            if (playSoundEffects && deathPlayer != null) deathPlayer.Play();
+            
             StartCoroutine(Death());
         }
 
@@ -52,6 +58,7 @@ public class playerLose : MonoBehaviour
             else
             {
                 AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxDeath);
+                
                 StartCoroutine(Death());
             }
         }
@@ -63,13 +70,21 @@ public class playerLose : MonoBehaviour
         Time.timeScale = 0f;
 
         if (deathImageObject != null)
-            Debug.Log("Player has died, showing death image.");
-            deathImageObject.SetActive(true); // show death image
-
+            //Debug.Log("Player has died, showing death image.");
+        deathImageObject.SetActive(true); // show death image
+        if (playSoundEffects && deathPlayer != null)
+        {
+            deathPlayer.Play();
+        }
         yield return new WaitForSecondsRealtime(delayBeforeReload);
 
         // Reset time and reload
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    private IEnumerator ResetInvincibility()
+    {
+        yield return new WaitForSeconds(0.5f); // tweak as needed
+        isInvincible = false;
     }
 }
