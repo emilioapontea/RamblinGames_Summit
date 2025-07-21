@@ -12,6 +12,19 @@ public class playerLose : MonoBehaviour
     private int ghostHitCount = 0;
     public int ghostLives = 3;
 
+    void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.CompareTag("Ghost"))
+        {
+            ghostHitCount++;
+            Debug.Log("Ghost hit! Current hit count: " + ghostHitCount);
+            if (ghostHitCount >= ghostLives)
+            {
+                if (playSoundEffects && deathPlayer != null) deathPlayer.Play();
+                StartCoroutine(Death());
+            }
+        }
+    }
+    
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ghost"))

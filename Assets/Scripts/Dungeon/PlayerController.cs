@@ -192,7 +192,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (other.CompareTag("ghost"))
+        if (other.CompareTag("Ghost"))
         {
             ghostHitCount++;
             if (ghostHitCount >= ghostLives)

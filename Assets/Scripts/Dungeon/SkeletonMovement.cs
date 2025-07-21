@@ -23,6 +23,7 @@ public class SkeletonMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         lastPosition = rb.position;
+        rb.constraints |= RigidbodyConstraints.FreezePositionY;
         PickNewDirection();
         if (area != null)
         {
