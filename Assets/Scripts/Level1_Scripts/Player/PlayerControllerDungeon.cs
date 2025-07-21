@@ -183,9 +183,9 @@ public class PlayerController : MonoBehaviour
             Attack();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            Jump();
-        }
+        // if (Input.GetKeyDown(KeyCode.Space)) {
+        //     Jump();
+        // }
 
         if (airborne && rb.linearVelocity.y == 0)
         {

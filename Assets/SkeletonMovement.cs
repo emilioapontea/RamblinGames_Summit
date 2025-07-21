@@ -60,25 +60,28 @@ public class SkeletonMovement : MonoBehaviour
                 PickNewDirection();
                 timer = 0f;
             }
-            if (anim != null)
-            {
-                float speed = rb.linearVelocity.magnitude;
-                anim.SetFloat("Speed", speed); // Use your blend tree's parameter name here!
-            }
-            rb.linearVelocity = direction * speed;
+        }
 
-            timer += Time.fixedDeltaTime;
-            if (timer >= changeDirection)
-            {
-                PickNewDirection();
-                timer = 0f;
-            }
+        // Animation
+        if (anim != null)
+        {
+            float currentSpeed = rb.linearVelocity.magnitude;
+            anim.SetFloat("Speed", currentSpeed);
+        }
 
-            if (direction.sqrMagnitude > 0.01f)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-                rb.MoveRotation(targetRotation);
-            }
+        rb.linearVelocity = direction * speed;
+
+        timer += Time.fixedDeltaTime;
+        if (timer >= changeDirection)
+        {
+            PickNewDirection();
+            timer = 0f;
+        }
+
+        if (direction.sqrMagnitude > 0.01f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+            rb.MoveRotation(targetRotation);
         }
     }
 
@@ -87,13 +90,11 @@ public class SkeletonMovement : MonoBehaviour
         if (area != null)
         {
             Vector3 areaCenter = area.position;
-            Vector3 areaExtent = area.localScale * 0.5f;
-            Vector3 escapeDir = (areaCenter - rb.position).normalized; // towards area center
+            Vector3 escapeDir = (areaCenter - rb.position).normalized;
             escapeDir.y = 0;
-            if (escapeDir.sqrMagnitude < 0.1f)
+            if (escapeDir.sqrMagnitude < 0.01f)
             {
-                // If very close to center, just pick a random direction
-                PickNewDirection();
+                PickRandomDirection();
             }
             else
             {
@@ -102,8 +103,26 @@ public class SkeletonMovement : MonoBehaviour
         }
         else
         {
-            PickNewDirection();
+            PickRandomDirection();
         }
+    }
+
+    void PickRandomDirection()
+    {
+        Vector3 newDir;
+        int tries = 0;
+        do
+        {
+            float angle = Random.Range(0f, 360f);
+            newDir = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), 0, Mathf.Sin(angle * Mathf.Deg2Rad)).normalized;
+            tries++;
+        } while (Vector3.Dot(newDir, direction) > 0.85f && tries < 10);
+        direction = newDir;
+    }
+
+    void PickNewDirection()
+    {
+        PickRandomDirection();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -113,17 +132,10 @@ public class SkeletonMovement : MonoBehaviour
             PickNewDirection();
             timer = 0f;
         }
-        // Fireball kill logic
         if (collision.gameObject.CompareTag("Fireball"))
         {
-            Destroy(gameObject); // Skeleton dies
-            Destroy(collision.gameObject); // Optionally destroy the fireball too
+            Destroy(gameObject);
+            Destroy(collision.gameObject);
         }
-    }
-
-    void PickNewDirection()
-    {
-        float angle = Random.Range(0f, 360f);
-        direction = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), 0, Mathf.Sin(angle * Mathf.Deg2Rad)).normalized;
     }
 }

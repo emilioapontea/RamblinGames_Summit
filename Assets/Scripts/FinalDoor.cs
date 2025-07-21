@@ -1,16 +1,15 @@
 using UnityEngine;
 
-public class GateDoor : MonoBehaviour
+public class FinalDoor : MonoBehaviour
 {
-    public Transform gateDoor;         
+    public Transform gateDoor;
     public float openHeight = 5f;
-    public float openSpeed = 3f;       
-    public float closeSpeed = 3f;     
+    public float openSpeed = 3f;
+    public float closeSpeed = 3f;
+    public GameObject[] ghosts;
 
     private Vector3 closedPos;
     private Vector3 openedPos;
-    private bool isOpen = false;
-    private bool hasClosed = false;
 
     void Start()
     {
@@ -23,28 +22,19 @@ public class GateDoor : MonoBehaviour
         openedPos = closedPos + Vector3.up * openHeight;
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (hasClosed) return;
-        if (other.CompareTag("Player"))
-        {
-            isOpen = true;
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (hasClosed) return;
-        if (other.CompareTag("Player"))
-        {
-            isOpen = false;
-            hasClosed = true; // Door will close and never open again
-        }
-    }
-
     void Update()
     {
-        if (isOpen && !hasClosed)
+        bool allGhostsInactive = true;
+        foreach (GameObject ghost in ghosts)
+        {
+            if (ghost.activeInHierarchy)
+            {
+                allGhostsInactive = false;
+                break;
+            }
+        }
+
+        if (allGhostsInactive)
         {
             gateDoor.localPosition = Vector3.MoveTowards(gateDoor.localPosition, openedPos, openSpeed * Time.deltaTime);
         }
