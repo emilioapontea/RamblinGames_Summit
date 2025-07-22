@@ -25,7 +25,7 @@ If you fall in lava, you die. Bowser left a sign in the dungeon explaining how t
 You can shoot fire to kill the ghosts.
 If you reach the end, the gate opens and you move on to the next room.
 
-### LevelX (Garden)
+### GemLevel (Garden)
 Player has to collect all the gems whilst dodging the enemy and
 keeping health.
 Once all 7 gems have been collected the doors will slide open
@@ -45,14 +45,24 @@ If you fall in the water, you die.
 
 ### IcePuzzleLevel
 Move the character around to solve 4 separate ice block puzzles.
-To push an ice block, move towards it for an extended period of time.
-After the block experiences a prolonged impact force, it will slide
-in that direction at a constant speed. The ice block will stop sliding
-when it hits the edge of the puzzle (indicated by raised snow terrain),
+To push an ice block, move towards it and press ENTER.
+It will slide in that direction at a constant speed. The ice block will stop
+sliding when it hits the edge of the puzzle (indicated by raised snow terrain),
 another ice block, or any obstacles in the way (wooden crate).
 To solve a puzzle, an ice block must stop exactly in the position
 indicated by the translucent red cube.
-Solve all 4 ice puzzles to unlock the door and move on to the next scene (End)
+Solve all 4 ice puzzles to unlock the door and move on to the next scene
+
+### PlatformLevel
+Bowser tells you this is the final room.
+Traverse across the level, avoiding the large water and lava puddles.
+Stepping on either one causes death.
+A hint tells you you can wall jump on red walls. Use your three well-times wall jumps
+to get up to the upper platform and grab the blue mushroom.
+The blue mushroom grants invincibility to water. Drop to the water puddle and grab
+the red mushroom. This grants lava invincibility, so you can go through the lava puddle
+to collect the orange mushroom. The final mushroom makes the star appear.
+Collect the star but (surprise!) the star moves. Collect it again to win the game.
 
 ## Known problem areas
 ### `Title` scene
@@ -74,45 +84,7 @@ Solve all 4 ice puzzles to unlock the door and move on to the next scene (End)
 * Ice block push force threshold is inconsistent
 * Luna animation note yet implemented
 
-## Alpha Version Manifest
-### Changelog
-Emilio
-* Created `IcePuzzleLevel` scene with 4 different Ice puzzles
-* Created ice puzzle blocks that need to be pushed (for an extended period of time) by the player and then slide with constant speed until they hit the edge or another ice block
-* Ice puzzle trigger objects (transparent, red) turn green and complete the ice puzzle when an ice block stops at its grid location
-* When all 4 puzzles are completed the exit door opens, revealing an invisible box collider to start the next scene
-* Added ice and snow textures
-* Added snow terrain to separate the 4 ice puzzle areas
-* Add sound effects
-  * Slide sound for ice blocks
-  * Sound effects for achievements (complete puzzle, finish level, etc.)
-  * Door open sound effect
-* Add wall and door texture/material
-
-Neja
-* Created a garden gem level.
-* Player has partial root motion and animation. Currently implemented forward motion and jumping.
-* Player has to collect all the gems whilst dodging the enemy and keeping health. Once all 7 gems have been collected the doors will slide open and there is a collider to move to the next scene. There are purple exploding tiles that disappear 3 seconds after collision. 3 Enemy monsters that keep guard of the garden and will decrease health on collision with player.
-* Added audio for gem collection and enemy obstacles that will decrease health on the health bar.
-
-Benjamin
-- Created 4 scenes: title screen, controls screen, character testing scene, and Level 1 (tower entrance)
-- The title screen and controls screen are composed of a UI canvas with a few text elements, and buttons to proceed to a set destination scene.
-- The character test scene is not meant to be part of the game, but it contains a small play area with a ramp, fences, and a pillar to test character movement and collision.
-- I have created a player character to be used for the CharacterTest and Level1 scenes. This player consists of a cylinder collider (no actual model yet) with various features. 
-- The player character can be moved in four directions using the W/A/S/D keys, and can turn in place using the O and P keys. Turning the character also moves the camera so that it remains pointed at the character's back. The character's controls should seem consistent as the camera rotates (e.g. pressing the W key always causes the player to move in the direction the camera is facing).
-- The player character can jump by pressing the spacebar. Like many platformer games, the player's jump height increases the longer spacebar is held down for.
-- The player character has the ability to die by falling in the moat surrounding the tower, causing the game to stop time, and display a message prompting the user to press the R key to reset the level. The R key can only be used to reset the level after the player has died.
-- The 'Level1' scene is intended to be the tower entrance. This area is mainly here to allow the player to experiment with the controls in a safe area. I tried to add a bit of atmosphere by adding a drawbridge, and some lighting effects in the tower entrance room.
-- Level 1 has a drawbridge which makes use of an invisible trigger zone to detect that the player character is near the drawbridge. The drawbridge uses mecanim to lower the bridge when the player moves into the trigger zone, and to raise the bridge when the player leaves the trigger zone.
-- A pause screen can be accessed in the 'Level1' and 'CharacterTest' scenes by pressing the Escape key. The pause menu stops the game while visible, and has a button to reset the current scene, and another button to terminate the game. Pressing the Escape key while the pause menu is open will close the pause menu and resume time in the scene.
-- Reaching an invisible win area within the 'Level1' scene (placed at some stairs leading further up the tower) will cause a level complete message to appear. This message prompts the player to press the Enter key to move onto the next level (which can be set in the inspector).
-- I have added a few sound effects to the 'Level1' scene.
-  1. The player character plays an effect upon jumping.
-  2. The player character plays an effect upon landing.
-  3. The player character plays an effect upon dying.
-  4. The drawbridge plays an effect upon a player character entering or exiting the trigger zone, signaling that the drawbridge is going to be raised or lowered.
-
+## Final Version Manifest
 ### Team member assets contributed
 Emilio
 * Materials/IcePuzzleLevel_Materials/*
@@ -120,12 +92,26 @@ Emilio
 * Prefabs/IcePuzzleLevel/*
 * Scenes/IcePuzzleLevel.unity
 * Scenes/End.unity
+* Sound assets
+* Luna animation controller
 
 Neja
 * Assets/Materials/LevelX
 * Asets/ModelsAndAnimations/LevelX
 * Assets/Prefabs/LevelX
 * Assets/Scenes/LevelX
+* Assets/Materials/GemLevel
+* Assets/ModelsAndAnimations/GemLevel
+* Assets/Prefabs/GemLevel
+* Assets/Scenes/GemLevel
+* Luna - prefab model imported from asset store that we added root motion and and animator to move the character.
+* Collectable gems that spin, with the model imported from unity asset store and added rotating animation, and a collectable script to it.Also added audio
+* Purple exploding tiles that disappear 2 seconds after the player collides with it.
+* Yellow moving tiles that move up and down that the player jumps on to reach the gems.
+* 2 enemy agents (monsters), whose models were imported from the asset store, and then added audio to detect collisions with player and move randomly around the navmesh.
+* 1 purple AI agent (big monster) that has a state machine moves between 2 waypoints in front of the door, when player gets close to it, the agent converses with the player to give them a clue on how to solve the game.
+* Added in a grass material texture for the ground, and a material for the walls and doors as well.
+* Health bar was implemented off of the asset store.
 
 Luna - prefab model imported from asset store that we added root motion and and animator to move the character.
 Collectable gems that spin, with the model imported from unity asset store and added rotating animation, and a collectable script to it.Also added audio
@@ -145,6 +131,15 @@ Benjamin
 * Scenes/Controls.unity
 * Scenes/Level1.unity
 * Scenes/Title.unity
+* Materials/Level1_Materials (Some of the materials I created in this folder used base/height/normal maps from other levels. When creating materials from borrowed textures, I did define some unique parameters such as tiling so that these textures would better suit my level. The materials and textures in Materials/Level1_Materials/Aquaset were imported from the free package 'Marble Design Materials' found on the Unity Asset Store. This package was published by the user 'Aquaset')
+* Models_and_Animations/Level1_Models_and_Animations
+* Physics_Materials/Level1_Physics_Materials
+* Prefabs/Level1_Prefabs
+* Materials/Joy_Materials/WalljumpWall.mat
+* Physics_Materials/Joy_physics_materials/Wall_material.physicMaterial
+* Physics_Materials/Joy_physics_materials/WalljumpWall_material.physicMaterial
+* Scenes/Level1.unity (I wasn't the only person who worked on this scene, but I believe I did most of the work on getting this scene complete).
+* Scenes/PlatformLevel.unity (I implemented the walljump mechanics as well as the walljump platforming challenge)
 
 ### Team member C# files contributed
 Emilio (`Scripts/IcePuzzleLevel_Scripts`)
@@ -153,6 +148,10 @@ Emilio (`Scripts/IcePuzzleLevel_Scripts`)
 * `IceBlockController.cs`
 * `IcePuzzleTriggerController.cs`
 * `PuzzleCounter.cs`
+* `Assets/Scripts/LevelX/BackgroundAudioManager.cs`
+* `Assets/Scripts/LevelX/Player/RootMotionControl.cs`
+* `Assets/playerLose.cs`
+* `Assets/PlayerSoundManager.cs`
 
 Neja
 * `CoinManager.cs`
@@ -169,6 +168,24 @@ Neja
 * `HealthBarHUDTester.cs`
 * `PlayerStats.cs`
 * `RootMotionControl.cs`
+* All Scripts/GemLevel:
+* `CharacterInputController.cs`
+* `CoinManager.cs`
+* `CollectableCoin.cs`
+* `DoorOpener.cs`
+* `EnemyFSM.cs`
+* `EnemyWalking.cs`
+* `ExploadingTile.cs`
+* `LoadNextScene.cs`
+* `MovingTile.cs`
+* Player files:
+* `PlayerMovement.cs`
+* `HealthBarController.cs`
+* `HealthBarHUDTester.cs`
+* `PlayerStats.cs`
+* `RootMotionControl.cs`
+* Camera files:
+* `ThirdPersonCamera.cs`
 
 Benjamin (`Scripts/Level1_Scripts`)
 * `DrawbridgeAnimator.cs`
@@ -177,3 +194,32 @@ Benjamin (`Scripts/Level1_Scripts`)
 * `LoseHandler.cs`
 * `SceneReset.cs`
 * `WinHandler.cs`
+* `Scripts/Level1_Scripts` (I did create all of the scripts in this folder, but other team members may have made some minor edits to some of the enclosed scripts)
+* `Scripts/Scripts_Joy/Final_Joy/MushroomPickup.cs` (I did not create this script myself, but I did add some code to have the mushrooms spin along the y-axis)
+
+Jingyan (Joy) (`Scripts/Scripts_Joy`)
+*`Final_Joy/AudioManager.cs`
+*`Final_Joy/CharacterJump.cs`
+*`Final_Joy/DeathManager.cs`
+*`Final_Joy/GameStateManager.cs`
+*`Final_Joy/GapTrigger.cs`
+*`Final_Joy/HintManager.cs`
+*`Final_Joy/IceLakeTrigger.cs`
+*`Final_Joy/JoyLoseHandler.cs`
+*`Final_Joy/LavaLakeTrigger.cs`
+*`Final_Joy/MushroomManager.cs`
+*`Final_Joy/MushroomPickup.cs`
+*`Final_Joy/PauseManager.cs`
+*`Final_Joy/StarController.cs`
+*`Audio/Joy/*`
+
+Rushil
+* Created Maze/Dungeon Level Scene
+* Player Navigates through a dungeon while battling enemies to eventually reach the end of the dungeon where they move onto the next level
+  * Created Gate which operates based on certain thresholds- i.e. player proximity, or level objectives completion
+  * Contributed Ghost and Skeleton Movement Scripts
+  * Contributed Fireball Attack functionality for player on dungeon level
+  * Worked on various bugs and defects throughout the development process
+* Made final trailer for game
+* Scripts Contributed:
+  * Scripts Assets/Scripts/Dungeon
