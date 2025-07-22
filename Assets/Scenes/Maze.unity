@@ -41843,7 +41843,8 @@ PrefabInstance:
     - target: {fileID: 1011390590405420117, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
       propertyPath: dialogLines.Array.data[1].line
       value: The only way to get through is the gate at the other side. But watch
-        out for skeletons and <color=purple>ghosts</color>.
+        out for skeletons and <color=purple>ghosts</color>. You must eliminate them
+        all to get through.
       objectReference: {fileID: 0}
     - target: {fileID: 1011390590405420117, guid: 83a2b586f2c4841db9ab551333a7a47f, type: 3}
       propertyPath: dialogLines.Array.data[2].line

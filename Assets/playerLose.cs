@@ -17,9 +17,12 @@ public class playerLose : MonoBehaviour
     void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("Ghost"))
         {
+            if (isInvincible) return;
+            isInvincible = true;
+            StartCoroutine(ResetInvincibility());
             ghostHitCount++;
             PlayerStats.Instance.TakeDamage(1);
-            Debug.Log("Skeleton hit! Current hit count: " + ghostHitCount);
+            // Debug.Log("Skeleton hit! Current hit count: " + ghostHitCount);
             if (ghostHitCount >= ghostLives)
             {
                 if (playSoundEffects && deathPlayer != null) deathPlayer.Play();
