@@ -14,6 +14,29 @@ public class playerLose : MonoBehaviour
     public int ghostLives = 3;
     private bool isInvincible = false;
     public float invincibilityDuration = 1f;
+ 
+    void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.CompareTag("Ghost"))
+        {
+            if (isInvincible) return;
+            isInvincible = true;
+            StartCoroutine(ResetInvincibility());
+            ghostHitCount++;
+            PlayerStats.Instance.TakeDamage(1);
+            // Debug.Log("Skeleton hit! Current hit count: " + ghostHitCount);
+            if (ghostHitCount >= ghostLives)
+            {
+                if (playSoundEffects && deathPlayer != null) deathPlayer.Play();
+                StartCoroutine(Death());
+
+            }
+
+        }
+
+    }
+ 
+
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ghost"))
