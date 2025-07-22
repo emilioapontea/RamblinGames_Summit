@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterInputController : MonoBehaviour
 {
@@ -65,5 +66,14 @@ public class CharacterInputController : MonoBehaviour
         // Fire1 = Action (mouse click, space, etc.)
         Action = Input.GetButtonDown("Fire1");
         Jump = Input.GetButtonDown("Jump");
+
+        // Debug skip key
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Debug.Log("Skipping to next level...");
+            // Implement level skip logic here
+            // For example, load the next scene or reset the current one
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 }

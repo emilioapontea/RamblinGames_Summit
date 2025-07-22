@@ -12,11 +12,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Controls.unity
     guid: 69be2ddcf6af9c54fb3eeb95bbaaf7d4
   - enabled: 1
-    path: Assets/Scenes/Maze.unity
-    guid: 4911c297e7aa3344a9bfcbddcbfd6fe1
-  - enabled: 1
     path: Assets/Scenes/Level1.unity
     guid: 1ee1c64694fd25244a409d9b07dac2f3
+  - enabled: 1
+    path: Assets/Scenes/Maze.unity
+    guid: 4911c297e7aa3344a9bfcbddcbfd6fe1
   - enabled: 1
     path: Assets/Scenes/GemLevel.unity
     guid: 247d5b38de9d84b68af9df8400a4c79a

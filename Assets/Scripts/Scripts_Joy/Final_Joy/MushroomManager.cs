@@ -67,13 +67,13 @@ public class MushroomManager : MonoBehaviour
         switch (mushroomCollectedCount)
         {
             case 1:
-                AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxMushroom1);  // assign this in AudioManager
+                //AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxMushroom1);  // assign this in AudioManager
                 break;
             case 2:
-                AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxMushroom2);
+                //AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxMushroom2);
                 break;
             case 3:
-                AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxMushroom3);
+                //AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxMushroom3);
                 if (star != null)
                 {
                     // star.ActivateStar(); // Make star visible after collecting all 3

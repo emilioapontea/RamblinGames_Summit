@@ -6,6 +6,7 @@ public class playerLose : MonoBehaviour
 {
     public AudioSource deathPlayer;
     public GameObject deathImageObject;
+    public GameStateManager gameStateManager;
     public float delayBeforeReload = 5f;
     [SerializeField] private bool playSoundEffects = true;
     // TODO: implement this in the hearts script instead
@@ -38,26 +39,31 @@ public class playerLose : MonoBehaviour
 
         if (other.CompareTag("Lava"))
         {
-            if (GameStateManager.Instance.hasLavaMushroom)
+            if (gameStateManager != null && gameStateManager.hasLavaMushroom)
             {
-                AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxLava);
+                // if (AudioManager.Instance!= null && AudioManager.Instance.sfxLava != null)
+                //     AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxLava);
+                
             }
             else
             {
-                AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxDeath);
+                // if (AudioManager.Instance != null && AudioManager.Instance.sfxDeath != null)
+                //     AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxDeath);
                 StartCoroutine(Death());
             }
         }
 
         if (other.CompareTag("Water"))
         {
-            if (GameStateManager.Instance.hasIceMushroom)
+            if (gameStateManager != null && gameStateManager.hasIceMushroom)
             {
-                AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxIce);
+                // if (AudioManager.Instance != null && AudioManager.Instance.sfxIce != null)
+                //     AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxIce);
             }
             else
             {
-                AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxDeath);
+                // if (AudioManager.Instance != null && AudioManager.Instance.sfxDeath != null)
+                //     AudioManager.Instance.PlaySFX(AudioManager.Instance.sfxDeath);
                 
                 StartCoroutine(Death());
             }

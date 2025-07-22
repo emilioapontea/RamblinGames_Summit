@@ -18,6 +18,8 @@ public class BackgroundAudioManager : MonoBehaviour
             audioSource.clip = backgroundMusic;
             audioSource.loop = true;
             audioSource.playOnAwake = false;
+            audioSource.volume = 0.10f; // Set volume to a reasonable level
+
             Play();
         }
         else

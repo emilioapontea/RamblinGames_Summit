@@ -11,14 +11,14 @@ public class GameStateManager : MonoBehaviour
     private void Awake()
     {
         // Ensure only one instance
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // Persist across scenes
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        // if (Instance == null)
+        // {
+        //     Instance = this;
+        //     DontDestroyOnLoad(gameObject); // Persist across scenes
+        // }
+        // else
+        // {
+        //     Destroy(gameObject);
+        // }
     }
 }

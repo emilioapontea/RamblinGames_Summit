@@ -54,6 +54,7 @@ using UnityEngine;
 
 public class MushroomPickup : MonoBehaviour
 {
+    public GameStateManager gameStateManager;
     public enum MushroomType { Power, Lava, Ice }
     public MushroomType mushroomType;
     /// <summary>
@@ -84,17 +85,17 @@ public class MushroomPickup : MonoBehaviour
                 case MushroomType.Power:
                     clipToPlay = powerClip;
                     message = "Power Mushroom collected!";
-                    GameStateManager.Instance.hasPowerMushroom = true;
+                    if (gameStateManager != null) gameStateManager.hasPowerMushroom = true;
                     break;
                 case MushroomType.Lava:
                     clipToPlay = lavaClip;
                     message = "Lava Mushroom collected!";
-                    GameStateManager.Instance.hasLavaMushroom = true;
+                    if (gameStateManager != null) gameStateManager.hasLavaMushroom = true;
                     break;
                 case MushroomType.Ice:
                     clipToPlay = iceClip;
                     message = "Ice Mushroom collected!";
-                    GameStateManager.Instance.hasIceMushroom = true;
+                    if (gameStateManager != null) gameStateManager.hasIceMushroom = true;
                     break;
             }
 
